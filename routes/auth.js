@@ -11,17 +11,14 @@ router.post('/login',function(req,res,next){
         
         if(err)console.log(err);
         
-        for (var i = 0; i < results.length; i++) {
-           /*if(passwordHash.verify( req.body.password, results[i].password) === true){
+       
+           if(passwordHash.verify( req.body.password, results[i].password) === true){
                res.send("verified");
-           }*/
-            if(results[i].password===req.body.password){
-                res.send("equals");
-            }
+           }
            else{
                res.send("not equals")
            }
-        }
+        
     });
 });
 router.post('/signup',function (req,res,next){
