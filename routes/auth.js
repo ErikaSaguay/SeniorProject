@@ -12,34 +12,45 @@ router.post('/login',function(req,res,next){
         if(err)console.log(err);
         
         for (var i = 0; i < results.length; i++) {
-           if(passwordHash.verify( req.body.password, results[i].password) === true){
+           /*if(passwordHash.verify( req.body.password, results[i].password) === true){
                res.send("verified");
-           }
+           }*/
+            if(results[i].password===req.body.password){
+                res.send("equals");
+            }
            else{
-               res.send("not equals");
+               res.send("not equals")
            }
         }
     });
 });
 router.post('/signup',function (req,res,next){
     
+    var hashedPassword = passwordHash.generate(req.body.password);
+    
+    console.log(hashedPassword);
+    
     var request = new sql.Request();
     
-    request.query("SELECT userName FROM Customer WHERE userName = '"+req.body.signUsername+"'", function(err, results){
+    request.query("SELECT userName FROM Customer WHERE userName = '"+req.body.username+"'", function(err, results){
+        
+        if(err)console.log(err);
         
         if(results.length > 0){
-            console.log("name taken");
+            res.send( hashedPassword);
         }
         else{
             
-            var hashedPassword = passwordHash.generate(req.body.signPassword);
+            /*var insertUser = "INSERT INTO Customer(firstName,lastName,userName,password)VALUES ?";
+    
+            var values = [req.body.firstName,req.body.lastName,req.body.userName,hashedPassword];
 
-            request.query("INSERT INTO Customer(firstName,lastName,userName,password)VALUES ('"+req.body.firstName+"','"+req.body.lastName+"','"+req.body.signUsername+"','"+hashedPassword+"')", function (err, result) {
+            request.query(insertUser, [values], function (err, result) {
                 if (err) throw err;
-                console.log("Signup was successful");
-            });
+                console.log("Number of records inserted: " + result.affectedRows);
+            });*/
         }
-        if(err)console.log(err);
+        
     });
 });
 router.get('/', function(req, res, next) {
