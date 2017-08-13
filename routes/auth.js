@@ -22,11 +22,7 @@ router.post('/login',function(req,res,next){
     });
 });
 router.post('/signup',function (req,res,next){
-    
-    var hashedPassword = passwordHash.generate(req.body.password);
-    
-    console.log(hashedPassword);
-    
+
     var request = new sql.Request();
     
     request.query("SELECT userName FROM Customer WHERE userName = '"+req.body.username+"'", function(err, results){
@@ -34,18 +30,14 @@ router.post('/signup',function (req,res,next){
         if(err)console.log(err);
         
         if(results.length > 0){
-            res.send( hashedPassword);
+            res.send("Username is taken");
         }
         else{
-            
-            /*var insertUser = "INSERT INTO Customer(firstName,lastName,userName,password)VALUES ?";
-    
-            var values = [req.body.firstName,req.body.lastName,req.body.userName,hashedPassword];
-
-            request.query(insertUser, [values], function (err, result) {
+            var hashedPassword = passwordHash.generate(req.body.password);
+            request.query("INSERT INTO Customer(firstName,lastName,userName,password)VALUES('"+req.body.firstName+"','"+req.body.lastName+"','"+req.body.userName+"','"+hashedPassword+"')" , function (err, result) {
                 if (err) throw err;
-                console.log("Number of records inserted: " + result.affectedRows);
-            });*/
+                console.log("You have signed up");
+            });
         }
         
     });
