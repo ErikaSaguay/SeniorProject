@@ -8,20 +8,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var http = require('http');
-
-//var sql = require('mssql');
-//var passwordHash = require('password-hash');
+var sql = require('mssql');
+var passwordHash = require('password-hash');
 
 
 require('./models/dbconnection');
 
-var index = require('./routes/index');
-var login = require('./routes/auth');
+var routes = require('./routes/index');
+var auth = require('./routes/auth');
 
 
 app.use(express.static("public"));
 app.use(express.static("views"));
 
+app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
@@ -31,8 +31,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.use('/index',index);
-app.use('/home',login);
+app.use('/',routes);
+app.use('/auth',auth);
+
 
 app.use(function(reg, res, next){
     res.header('Access-Control-Allow-Origin', '*');
