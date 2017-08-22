@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 var sql = require('mssql');
 
+//flash messages
+var session = require('express-session');
+var flash = require('connect-flash-plus');
+
+var path = require('path');
+var fs = require('file-system');
+var os = require('os');
 
 router.post('/getAllLogos',function(req, res, next){
     
@@ -24,7 +31,7 @@ router.post('/getOneLogo', function(req, res, next) {
 
         }
     });
-});
+}); 
 router.post('/insertLogo', function(req, res, next) {
     
     var request = new sql.Request();
@@ -44,7 +51,19 @@ router.post('/removeOneLogo', function(req, res, next) {
     });
 });
 
-router.get('/home', function(req, res, next) {
-    res.render('index');
+router.post('/createAndAddLogo', function(req, res, next) {
+    var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
+    var buf = new Buffer(dataURL, 'base64');
+    fs.writeFile('public/assets/image.png', buf);
+     res.render('pages/index', {messages: "file uploaded!"});
+});
+
+router.get('/', function(req, res, next) {
+   res.render('pages/index', { messages: req.flash('info') });
+});
+
+router.get('/login', function(req, res, next) {
+    console.log("login page");
+    res.render('pages/login');
 });
 module.exports = router;
