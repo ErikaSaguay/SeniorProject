@@ -51,6 +51,7 @@ router.post('/removeOneLogo', function(req, res, next) {
     });
 });
 
+<<<<<<< HEAD
 router.post('/createAndAddLogo', function(req, res, next) {
     var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
     var buf = new Buffer(dataURL, 'base64');
@@ -59,7 +60,8 @@ router.post('/createAndAddLogo', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-   res.render('pages/index', { messages: req.flash('info') });
+    console.log("index page");
+    res.render('pages/index', { messages: req.flash('info') });
 });
 
 router.get('/login', function(req, res, next) {

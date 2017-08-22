@@ -9,12 +9,17 @@ router.get('/', function(req, res, next) {
     res.render('pages/login');
 });
 
+
+router.get('/', function(req, res, next) {
+  
+    res.render('pages/login');
+});
+
 router.post('/login',function(req,res,next){
 
     var request = new sql.Request();
     
     request.query("SELECT password FROM Customer WHERE userName = '"+req.body.username+"' ", function(err, results){
-        
 
         if(err)console.log(err);
             
@@ -22,7 +27,6 @@ router.post('/login',function(req,res,next){
 
               console.log("right");
                req.flash('info', 'Welcome ' + req.body.username);
-               res.redirect('/');
            }
            else{
               console.log("wrong");
