@@ -1,0 +1,24 @@
+
+
+<section id="logos">
+     
+          
+         <% sql.forEach(function (logos) { %>
+
+                <div> 
+                   <form action="#" method="post">
+
+                    <img src="/images/flower.jpg" style="width:20%">
+                    <p><%= logos.logoName %></p>
+                    <input type="hidden" name='pictureId' value="<%= logos.logoID %>">view</button>
+
+                    <button type="submit" formaction="/getOneLogo">view</button>
+                    <button type="submit" formaction="/getOneLogo">download</button>
+                    <button type-"submit" formaction="/removeOneLogo">delete</button>
+                    </form>
+                </div>
+               
+                                              
+         <% }) %>
+         
+</section>
