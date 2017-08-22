@@ -1,35 +1,25 @@
 var express = require('express');
 var router = express.Router();
 var sql = require('mssql');
+var session = require('express-session');
+var dateFormat = require('dateformat');
 
 
-router.post('/getAllLogos',function(req, res, next){
-    
-    var request = new sql.Request();
-    
-    request.query("SELECT fileName,logoID FROM Customer_Logos WHERE customerId = '"+req.body.id+"'", function(err, results){
-        if(err)
-            console.log("Problem getting user info function");
-        for (var i = 0; i < results.length; i++) {
-            res.render(results[i].logoID);
-        }
-    });
-});
 router.post('/getOneLogo', function(req, res, next) {
-
-    sql.query("SELECT fileName FROM Customer_Logos WHERE logoId =  '"+req.body.id+"'", function(err, results){
-        if(err)
-            console.log("Problem getting single logo function");
-        for (var i = 0; i < results.length; i++) {
-
-        }
+    var request = new sql.Request();
+    request.query("SELECT filePath FROM Customer_Logos WHERE logoID =  '"+req.body.pictureId+"'", function(err, results){
+        if (err) throw err;
+        console.log(results[0].filePath);
     });
 });
+
 router.post('/insertLogo', function(req, res, next) {
     
     var request = new sql.Request();
     
-    request.query("INSERT INTO Customer_Logos(customerId,logoName,dateCreated)VALUES ('"+req.body.logoName+"','"+req.body.customerId+"','"+Date.now()+"')", function (err, result) {
+    var date = new Date().toISOString();
+    
+    request.query("INSERT INTO Customer_Logos(customerId,logoName,dateCreated)VALUES ('"+req.body.logoName+"','"+req.body.customerId+"','"+date+"')", function (err, result) {
         if (err) throw err;
         console.log("Logo was inserted");
         //should show how many rows were effected;
@@ -38,19 +28,27 @@ router.post('/insertLogo', function(req, res, next) {
 
 router.post('/removeOneLogo', function(req, res, next) {
     var request = new sql.Request();
-    request.query( "DELETE FROM Customer_Logos WHERE logoId ='"+req.body.id+"'", function (err, result) {
+    request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
         if (err) throw err;
-        console.log("Number of records inserted: " + result.affectedRows);
+        console.log("logo removed");
     });
 });
 
 router.get('/', function(req, res, next) {
-    console.log("index page");
-    res.render('pages/index');
+    
+   var obj = {};
+   
+   var request = new sql.Request();
+   
+   request.query("SELECT logoName,logoID FROM Customer_Logos WHERE customerId = '1053C78E-FCFD-46EF-8C9C-78A889196098'", function(err, results){
+        if (err) throw err;
+        obj = {sql: results};
+        console.log(obj);
+        res.render('pages/index',{sql: results});
+        
+    });
+     
 });
 
-router.get('/login', function(req, res, next) {
-    console.log("login page");
-    res.render('pages/login');
-});
 module.exports = router;
+
