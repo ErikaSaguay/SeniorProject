@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var sql = require('mssql');
 var passwordHash = require('password-hash');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 require('./models/dbconnection');
 
@@ -21,6 +23,13 @@ var auth = require('./routes/auth');
 
 app.use(express.static("public"));
 app.use(express.static("views"));
+
+//initialize passport and the session variable that will hold the user info. 
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
@@ -64,5 +73,17 @@ if (app.get('env') === 'development') {
         });
     });
 }
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.json({           
+        "error": {
+            "message": err.message,
+            "status" : err.status
+        }                    
+    });
+});
 
 module.exports  = app;
