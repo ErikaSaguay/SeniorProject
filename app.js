@@ -10,6 +10,8 @@ var bodyParser = require('body-parser');
 var http = require('http');
 var sql = require('mssql');
 var passwordHash = require('password-hash');
+var passport = require('passport');
+var flash = require('connect-flash');
 
 
 require('./models/dbconnection');
@@ -21,12 +23,19 @@ var auth = require('./routes/auth');
 app.use(express.static("public"));
 app.use(express.static("views"));
 
+//initialize passport and the session variable that will hold the user info. 
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-app.use(cookieParser());
+app.use(cookieParser('keyboard cat'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -34,6 +43,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/',routes);
 app.use('/auth',auth);
 
+app.use(flash());
 
 app.use(function(reg, res, next){
     res.header('Access-Control-Allow-Origin', '*');
@@ -76,5 +86,4 @@ app.use(function(err, req, res, next) {
         }                    
     });
 });
-
 module.exports  = app;
