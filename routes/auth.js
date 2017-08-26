@@ -11,7 +11,7 @@ var flash = require('connect-flash');
 var userAuth = false;
 
 router.get('/', function(req, res, next) {  
-    res.render('pages/login');
+    res.render('pages/login', {req:req});
 });
 
  // used to serialize the user for the session
@@ -125,7 +125,7 @@ router.post('/login', passport.authenticate("login", { successRedirect: "/", fai
 router.post('/signup', passport.authenticate("signup", { successRedirect: "/", failureRedirect: "/auth" }));
 
 /* Handle Logout */
-router.get('/signout', function(req, res) {
+router.post('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
