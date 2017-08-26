@@ -1,7 +1,18 @@
-<section id="home">
-			
-        <h1 class="welcome">Hello User!</h1>
-        <h3><%= messages %></h3>
+<% if(typeof(user) !== 'undefined'){ %>
+        <%= "Hello " +  user.firstName + "!!" %>
+  <%  } %>
+</h1>
+    
+    <% if(typeof(user) !== 'undefined') { %>
+    
+        <form action="auth/logout" method="post" >
+    
+            <button type="submit" class="btn btn-primary">Logout</button>
+            
+        </form>
+    
+    <% } %>
+
         <p class="info"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
         Aliquam condimentum arcu ac erat tincidunt luctus. Sed ornare consectetur ante, a porttitor ligula iaculis in. 
         Quisque fermentum auctor euismod. Aenean pulvinar dolor orci, ac molestie eros rutrum in. Proin id velit accumsan, 
@@ -15,4 +26,3 @@
         Pellentesque lobortis
         <a href="#"class="nav-link" id="a-create-link">Get Started</a> semper lorem nec 
         <a href="#" class="nav-link" id="a-help-link">How To</a> ultrices.</p>
-</section> 

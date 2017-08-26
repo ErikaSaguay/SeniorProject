@@ -45,22 +45,30 @@ router.post('/createAndAddLogo', function(req, res, next) {
     var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
     var buf = new Buffer(dataURL, 'base64');
     fs.writeFile('public/assets/image.png', buf);
-     res.render('pages/index', {messages: "file uploaded!"});
+    res.render('partials/logospartial');
 });
 
 router.get('/', function(req, res, next) {
-    
-   var obj = {};
-   
-   var request = new sql.Request();
-   
-   request.query("SELECT logoName,logoID FROM Customer_Logos WHERE customerId = '1053C78E-FCFD-46EF-8C9C-78A889196098'", function(err, results){
-        if (err) throw err;
-        obj = {sql: results};
-        console.log(obj);
-        res.render('pages/index',{sql: results});
-        
-    });
+
+    res.render('partials/homepartial');
+
 });
 
+router.get('/Help', function(req, res, next) {
+    
+    res.render('partials/helppartial');
+ 
+});
+
+router.get('/CreateLogo', function(req, res, next) {
+    
+    res.render('partials/canvaspartial');
+ 
+});
+
+router.get('/MyLogos', function(req, res, next) {
+    
+    res.render('partials/logospartial');
+ 
+});
 module.exports = router;
