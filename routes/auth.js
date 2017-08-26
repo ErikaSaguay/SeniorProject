@@ -2,11 +2,12 @@ var express = require('express');
 var router = express.Router();
 var sql = require('mssql');
 var passwordHash = require('password-hash');
+var session = require('express-session');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var Sequelize = require('sequelize');
-var flash = require('connect-flash'); 
+var flash = require('connect-flash');
 
 var userAuth = false;
 

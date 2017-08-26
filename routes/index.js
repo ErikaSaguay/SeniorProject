@@ -4,6 +4,13 @@ var sql = require('mssql');
 var session = require('express-session');
 var dateFormat = require('dateformat');
 
+//flash messages
+var session = require('express-session');
+var flash = require('connect-flash-plus');
+
+var path = require('path');
+var fs = require('file-system');
+var os = require('os');
 
 router.post('/getOneLogo', function(req, res, next) {
     var request = new sql.Request();
@@ -34,21 +41,34 @@ router.post('/removeOneLogo', function(req, res, next) {
     });
 });
 
-router.get('/', function(req, res, next) {
-    
-   var obj = {};
-   
-   var request = new sql.Request();
-   
-   request.query("SELECT logoName,logoID FROM Customer_Logos WHERE customerId = '1053C78E-FCFD-46EF-8C9C-78A889196098'", function(err, results){
-        if (err) throw err;
-        obj = {sql: results};
-        console.log(obj);
-        res.render('pages/index',{sql: results});
-        
-    });
-     
+router.post('/createAndAddLogo', function(req, res, next) {
+    var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
+    var buf = new Buffer(dataURL, 'base64');
+    fs.writeFile('public/assets/image.png', buf);
+    res.render('partials/logospartial');
 });
 
-module.exports = router;
+router.get('/', function(req, res, next) {
 
+    res.render('partials/homepartial');
+
+});
+
+router.get('/Help', function(req, res, next) {
+    
+    res.render('partials/helppartial');
+ 
+});
+
+router.get('/CreateLogo', function(req, res, next) {
+    
+    res.render('partials/canvaspartial');
+ 
+});
+
+router.get('/MyLogos', function(req, res, next) {
+    
+    res.render('partials/logospartial');
+ 
+});
+module.exports = router;

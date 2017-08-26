@@ -1,18 +1,19 @@
 var express = require('express');
 var app = express();
+var expressLayouts = require('express-ejs-layouts');
 var engine = require('ejs-locals');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var flash = require('connect-flash-plus');
 var bodyParser = require('body-parser');
 var http = require('http');
 var sql = require('mssql');
 var passwordHash = require('password-hash');
 var passport = require('passport');
 var flash = require('connect-flash');
-
 
 require('./models/dbconnection');
 
@@ -32,25 +33,23 @@ app.use(passport.session());
 
 app.engine('ejs', engine);
 app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
-app.use(cookieParser('keyboard cat'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(expressLayouts);
+
+app.use(cookieParser());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+app.use(session({
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(flash());
 
 
 app.use('/',routes);
 app.use('/auth',auth);
-
-app.use(flash());
-
-app.use(function(reg, res, next){
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept');
-    res.header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');   
-    next();
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
