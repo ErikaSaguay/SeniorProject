@@ -49,26 +49,54 @@ router.post('/createAndAddLogo', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-
-    res.render('partials/homepartial');
-
+    //if the user exists then render the homepage with the user variable
+    if(req.user){
+        res.render('partials/homepartial.ejs', {req: req, user: req.user});
+    }
+    //else render the home page without the user variable
+    else {
+        res.render('pages/login', {req: req});
+    }
 });
 
 router.get('/Help', function(req, res, next) {
-    
-    res.render('partials/helppartial');
- 
+    if(req.user){
+        res.render('partials/helppartial');
+    }
+    //else render the home page without the user variable
+    else {
+        res.render('pages/login', {req: req});
+    }
+
 });
 
-router.get('/CreateLogo', function(req, res, next) {
-    
-    res.render('partials/canvaspartial');
- 
+router.get('/CreateLogo', function(req, res, next) { 
+    if(req.user){
+        res.render('partials/canvaspartial');
+    }
+    //else render the home page without the user variable
+    else {
+        res.render('pages/login', {req: req});
+    }
 });
 
-router.get('/MyLogos', function(req, res, next) {
+router.get('/MyLogos', function(req, res, next) { 
+    if(req.user){
+        var obj = {};
+        var request = new sql.Request();
+   
+        request.query("SELECT logoName,logoID FROM Customer_Logos WHERE customerId = '85E96C09-FD9F-4221-866C-7EB5D167AE1B'", function(err, results){
+            if (err) throw err;
+            obj = {sql: results};
+            console.log(obj);
+            res.render('partials/logospartial', {sql: results});
+        
+    });
+    }
+    //else render the home page without the user variable
+    else {
+        res.render('pages/login', {req: req});
+    }
     
-    res.render('partials/logospartial');
- 
 });
 module.exports = router;
