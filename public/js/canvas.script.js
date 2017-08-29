@@ -8,11 +8,11 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
-
+  
 	var bgImageSrc = [];
-	bgImageSrc.push("/images/background_images/bluesquare.png");
-	bgImageSrc.push("/images/background_images/purplesquare.png");
-	bgImageSrc.push("/images/background_images/redsquare.png");
+	bgImageSrc.push("static/images/background_images/bluesquare.png");
+	bgImageSrc.push("static/images/background_images/purplesquare.png");
+	bgImageSrc.push("static/images/background_images/redsquare.png");
 
 	$("#step0").click(function() {
 		scene.push({
@@ -30,7 +30,7 @@ $( document ).ready(function() {
 	$("#step1").click(function() { //(c.width()- obj[i].width )/ 2
 		scene.push({
 			type: "img",
-			src: "/images/circle_outline.png",
+			src: "static/images/circle_outline.png",
 			xPos: 50,
 			yPos: 50,
 			height: 400,
@@ -43,7 +43,7 @@ $( document ).ready(function() {
 	$("#step2").click(function() {
 		scene.push({
 			type: "img",
-			src: "/images/circle_outline.png",
+			src: "static/images/circle_outline.png",
 			xPos: 100,
 			yPos: 100,
 			height: 300,
@@ -56,7 +56,7 @@ $( document ).ready(function() {
 	$("#step3").click(function() {
 		scene.push({
 			type: "img",
-			src: "/images/midiboard.png",
+			src: getFilePath,
 			xPos: 225,
 			yPos: 225,
 			height: 50,

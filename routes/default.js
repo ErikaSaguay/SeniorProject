@@ -14,14 +14,12 @@ router.get('/defaultData',function(req,res,next){
     
 });
 //Default Images
-router.get('/defaultImages',function(req,res,next){
-    
+router.get('/defaultImages',function(req,res,next){    
     var request = new sql.Request();
     
     request.query("SELECT filePath FROM Default_Images", function (err, recordset) {       
         if (err) console.log(err);
          res.send(recordset);  
     });
-    
 });
 module.exports = router;

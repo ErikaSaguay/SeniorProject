@@ -20,8 +20,8 @@ require('./models/dbconnection');
 var routes = require('./routes/index');
 var auth = require('./routes/auth');
 
-
-app.use(express.static("public"));
+//make the app use the /static directory to pull all the js and css from public
+app.use('/static', express.static(path.join(__dirname, 'public')))
 app.use(express.static("views"));
 
 //initialize passport and the session variable that will hold the user info. 

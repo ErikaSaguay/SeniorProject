@@ -12,6 +12,8 @@ var path = require('path');
 var fs = require('file-system');
 var os = require('os');
 
+var iconName = "Planner";
+
 router.post('/getOneLogo', function(req, res, next) {
     var request = new sql.Request();
     request.query("SELECT filePath FROM Customer_Logos WHERE logoID =  '"+req.body.pictureId+"'", function(err, results){
@@ -72,12 +74,21 @@ router.get('/Help', function(req, res, next) {
 
 router.get('/CreateLogo', function(req, res, next) { 
     if(req.user){
-        res.render('partials/canvaspartial');
-    }
+        //create request var fro sql query
+        var request = new sql.Request();
+        //put the result into an arry to access later on
+        request.query("SELECT * FROM Default_Icons WHERE iconName= '" + iconName + "'", function (err, results) {       
+        if (err) console.log(err);
+        
+        console.log("This is the icon File Path: " + results[0].filePath);
+        res.render('partials/canvaspartial', {filePath: results[0].filePath});
+     
+        });//end query
+    }//end if
     //else render the home page without the user variable
     else {
         res.render('pages/login', {req: req});
-    }
+    }//end else
 });
 
 router.get('/MyLogos', function(req, res, next) { 

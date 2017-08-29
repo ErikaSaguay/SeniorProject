@@ -9,8 +9,6 @@ var session = require('express-session');
 var Sequelize = require('sequelize');
 var flash = require('connect-flash');
 
-var userAuth = false;
-
 router.get('/', function(req, res, next) {  
     res.render('pages/login', {req:req});
 });
@@ -47,13 +45,13 @@ passport.use('login', new LocalStrategy({
             //console.log(results[0]);
             if(results.length <=0) {
                 console.log("No User Found" + user + password);
-                //req.flash('message', "No user with the username: " + username + " was found.");
+                req.flash('message', "No user with the username: " + user + " was found.");
                 done(null, false);
             }
             
-                if(passwordHash.verify(password, results[0].password) === true){
+                else if(passwordHash.verify(password, results[0].password) === true){
                     //store userId in the variable using the passport session
-                    //req.flash('message', 'Successfully logged in!');
+                    req.flash('message', 'Successfully logged in!');
                     console.log('Successfully Logged In!');
                     //successfully logged in pass user object
                     //console.log(results[0].userName + results[0].password);
@@ -65,7 +63,7 @@ passport.use('login', new LocalStrategy({
                 else{
                     
                     console.log('Invalid Password!');
-                    //req.flash('message', 'Invalid Password');
+                    req.flash('message', 'Invalid Password');
                     done(null, false);
                 }
         });//end query request
@@ -85,11 +83,18 @@ passport.use('signup', new LocalStrategy({
     console.log(password);
     request.query("SELECT * FROM Customer WHERE userName = '"+ username +"' ", function(err, results){
         if(err){
+            req.flash('message', "Error when saving the user.");
               console.log('Error in Saving user: '+err);  
               throw err;  
         }      
         else if(results.length > 0){
             console.log('User already exists');
+            req.flash('message', "No user with the username: " + username + " was found.");
+            done(null, false);
+        }
+        else if(req.body.signPassword2 != password){
+            console.log("The passwords you typed didn't match, please try again");
+            req.flash('message', "The passwords you typed didn't match please try again!");
             done(null, false);
         }
         else{
@@ -99,6 +104,7 @@ passport.use('signup', new LocalStrategy({
             //if there is no user with that username then allow them to create a new user
             request.query("INSERT INTO Customer(firstName,lastName,userName,password)VALUES('"+req.body.firstName+"','"+req.body.lastName+"','"+req.body.signUsername+"','"+hashedPassword.toString()+"')" , function(err, result) {
                 if (err) throw err;
+                req.flash('message', "User Registration successful: " + username);
                 
                 console.log('User Registration succesful: ' + username);    
                 

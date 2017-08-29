@@ -1,3 +1,13 @@
+<%
+		var messages = req.flash("message");
+		if (messages.length > 0){
+	%>
+			<% for(msg in messages) { %>
+                        
+                        <div class="alert alert-dark"><h3><%= messages[msg] %><h3></div>
+			<% } %>
+	<% } %>
+
 <div class="login-form">
 	<div id="web-nav">
         <ul id="menu">
@@ -61,9 +71,9 @@
           
 			</form>
 		</section>
-	<script type="text/javascript" src="/js/jquery.js"></script>
-	<script type="text/javascript" src="/js/spectrum.js"></script>
-	<script type="text/javascript" src="/js/login.js"></script>
+	<script type="text/javascript" src="static/js/jquery.js"></script>
+	<script type="text/javascript" src="static/js/spectrum.js"></script>
+	<script type="text/javascript" src="static/js/login.js"></script>
 	</div>
 </div>
 
