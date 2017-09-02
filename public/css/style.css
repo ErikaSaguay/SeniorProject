@@ -96,6 +96,10 @@ li a {
     padding-left: 20%;
     font-size: 25px;
 }
+#welcomeText{
+    text-align: center;
+    text-transform: capitalize;
+}
 /*------Help Page--------*/
 .how-pic {
     width: 30%;
