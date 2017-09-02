@@ -63,7 +63,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/Help', function(req, res, next) {
     if(req.user){
-        res.render('partials/helppartial');
+        res.render('partials/helppartial', {user: req.user});
     }
     //else render the home page without the user variable
     else {
@@ -74,21 +74,12 @@ router.get('/Help', function(req, res, next) {
 
 router.get('/CreateLogo', function(req, res, next) { 
     if(req.user){
-        //create request var fro sql query
-        var request = new sql.Request();
-        //put the result into an arry to access later on
-        request.query("SELECT * FROM Default_Icons WHERE iconName= '" + iconName + "'", function (err, results) {       
-        if (err) console.log(err);
-        
-        console.log("This is the icon File Path: " + results[0].filePath);
-        res.render('partials/canvaspartial', {filePath: results[0].filePath});
-     
-        });//end query
-    }//end if
+        res.render('partials/canvaspartial', {user: req.user});
+    }
     //else render the home page without the user variable
     else {
         res.render('pages/login', {req: req});
-    }//end else
+    }
 });
 
 router.get('/MyLogos', function(req, res, next) { 
@@ -100,7 +91,7 @@ router.get('/MyLogos', function(req, res, next) {
             if (err) throw err;
             obj = {sql: results};
             console.log(obj);
-            res.render('partials/logospartial', {sql: results});
+            res.render('partials/logospartial', {sql: results, user: req.user});
         
     });
     }
