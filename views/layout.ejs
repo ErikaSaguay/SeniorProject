@@ -12,6 +12,9 @@
 			<li><a href="/MyLogos" class="bordered-text" id="nav-logos-btn">Logos</a></li>
 			<li><a href="/CreateLogo" class="bordered-text" id="nav-create-btn">Create</a></li>
 			<li><a href="/Help" class="bordered-text" id="nav-help-btn">Help</a></li>
+			 <% if(typeof(user) !== 'undefined') { %>
+                   	 <li><a href="/logout" class="bordered-text" >Logout</a></li>
+           		 <% } %>
 		</ul> 
 	</nav>
 </head>
