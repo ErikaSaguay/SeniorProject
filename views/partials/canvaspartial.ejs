@@ -4,27 +4,31 @@
 <img src="static/assets/default_Icons/icons8-Wallet-128.png" alt="default icon">
 
 
-<script>
-           var getFilePath = '<%= filePath  %>';  //var test is now assigned to getTest which will only work on browsers
-           console.log(getFilePath);  // successfully prints 101 on browser
-</script>
+
 
 <div style="position: relative; height: 500px; width: 500px">
 	<canvas id="logoCanvas" ></canvas>
 	</div>
+<select id='selectMenu'>
+	<% for(var i=0; i < results.length; i++) { %>
+	<option value='<%= results[i].filePath %>'><%= results[i].iconName%></option>
+	<% } %>
+</select>
 	<div>
 	    <button id="previousStep">Back</button>
 	  <ul>
-	  <li><button id="step0">Background Image</button></li>
-	  <li><button id="step1">Icon</button></li>
-	  <li><button id="step2">Inner Icon</button></li>
-	  <li><button id="step3">Text</button></li>
-	  <li><button id="step4">Step 4</button></li>
+	  <li><button id="step0">Background Color</button></li>
+	  <li><button id="step1">Outer Shape</button></li>
+	  <li><button id="step2">Inner Shape</button></li>
+	  <li><button id="step3">Icon</button></li>
+	  <li><button id="step4">Text</button></li>
 	  <a id="dl" download="Canvas.png" href="#">Download Canvas</a>
 	  </ul>
 	</div>
 	<form id="uploadForm" action='/createAndAddLogo' method="post">
 		<input type="hidden" name="dataURL" id="dataURL" />
-		<!-- <input type="file" name="imgFile" id="imgFile" /> -->
+		<input type="text" name='logoName' id='logoName' />
 		<input type="submit" value="Upload File" id="submit" name="submit">
 	</form>
+
+	<script type="text/javascript" src="static/js/canvas.script.js"></script>

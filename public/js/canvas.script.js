@@ -3,7 +3,7 @@ $( document ).ready(function() {
 	var scene = [];
 	var ctx;
 	var c = $("#logoCanvas");
-	var b = document.querySelector('button');
+	//var b = document.querySelector('button');
 	var deg = document.querySelector('input');
 	initializing();
 	var drawOrder = 0;
@@ -56,7 +56,7 @@ $( document ).ready(function() {
 	$("#step3").click(function() {
 		scene.push({
 			type: "img",
-			src: getFilePath,
+			src: $("#selectMenu option:selected").val(),
 			xPos: 225,
 			yPos: 225,
 			height: 50,
@@ -98,8 +98,7 @@ $( document ).ready(function() {
 
 	function initSteps(i){ // create steps button id's
 		steps[i] = document.getElementById("step" + i);
-		if (i != 0)
-			steps[i].disabled = true;
+		if (i != 0) {steps[i].style.visibility = "hidden";}
 	}
 
 	function rotate(degrees) { // rotates image on selected canvas
@@ -135,21 +134,7 @@ $( document ).ready(function() {
 				
 				ctx.fillText(obj[4].textValue, 205,205);
 				dataURL = c[0].toDataURL();
-
-
-
-				
 				$('#dataURL').val(dataURL);
-				// var imgBuffer = new Image();
-				// imgBuffer.src = dataURL;
-				// var loaded = new Promise(function(resolve, reject) {     
-				// 	imgBuffer.addEventListener("load", resolve);
-				// });
-				// loaded.then(function() {
-				// 	$('#imgFile').src(dataURL);
-				// });
-				// var imgBuffer = new Image();
-				// imgBuffer.src = dataURL;
 			});
 		}
 	}
@@ -168,28 +153,28 @@ $( document ).ready(function() {
 	}
 
 	function disableAndEnableStep(num) {
-		$("#step" + num).prop("disabled", true);
-		$("#step" + (num + 1)).prop("disabled", false);
+		$("#step" + num).css("visibility", "hidden");
+		$("#step" + (num + 1)).css("visibility", "visible");
 	}
 
 	//Events
 	
-	b.onclick = function() {
-		rotate(deg.value);
-	};
+	// b.onclick = function() {
+	// 	rotate(deg.value);
+	// };
 
 	document.querySelector('#previousStep').onclick = function() {
 		scene.pop();
 		drawOrder--;
 		if (scene.length == 0)
 		{
-			$("#step0").prop("disabled", false);
-			$("#step" + (scene.length + 1)).prop("disabled", true);
+			$("#step0").css("visibility", "visible");
+			$("#step" + (scene.length + 1)).css("visibility", "hidden");
 		}
 		else
 		{
-			$("#step" + (scene.length)).prop("disabled", false);
-			$("#step" + (scene.length + 1)).prop("disabled", true);
+			$("#step" + (scene.length)).css("visibility", "visible");
+			$("#step" + (scene.length + 1)).css("visibility", "hidden");
 		}
 		switchCase(scene);
 	};
@@ -200,16 +185,6 @@ $( document ).ready(function() {
 
 
 	function submitClick(){
-		// var imgBuffer = new Image();
-		// imgBuffer.src = dataURL;
-		// var loaded = new Promise(function(resolve, reject) {   
-		// 	imgBuffer.addEventListener("load", resolve);
-		// });
-
-		// loaded.then(function() {
-		// 	$.post('/createAndAddLogo');
-		// });
-
 		var dt = c[0].toDataURL();
 		  /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
 		  dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
@@ -221,14 +196,13 @@ $( document ).ready(function() {
 	}
 
 	function dlCanvas() {
-	  var dt = c[0].toDataURL();
-	  /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-	  dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+		var dt = c[0].toDataURL();
+		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
-	  /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-	  dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
-
-	  this.href = dt;
+		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+		this.href = dt;
 	};
 
 
