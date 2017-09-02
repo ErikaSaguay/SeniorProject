@@ -131,10 +131,5 @@ router.post('/login', passport.authenticate("login", { successRedirect: "/", fai
 //uses passport singup strategy once signup form is submitted
 router.post('/signup', passport.authenticate("signup", { successRedirect: "/", failureRedirect: "/auth" }));
 
-/* Handle Logout */
-router.post('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
 
 module.exports = router;
