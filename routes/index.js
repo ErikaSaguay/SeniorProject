@@ -45,7 +45,6 @@ router.post('/removeOneLogo', function(req, res, next) {
 
 router.post('/createAndAddLogo', function(req, res, next) {
 
-
     var request = new sql.Request();
     
     var date = new Date().toISOString();
@@ -66,7 +65,8 @@ router.post('/createAndAddLogo', function(req, res, next) {
             var logopath = 'public/assets/user_icons/' + req.user.customerId + results[0].logoId + results[0].logoName;
             fs.writeFile(logopath, buf);
         });
-            res.render('partials/logospartial');
+            req.flash('message', 'Uploaded');
+            res.redirect('/');
     });
 });
 
@@ -94,12 +94,20 @@ router.get('/Help', function(req, res, next) {
 
 router.get('/CreateLogo', function(req, res, next) { 
     if(req.user){
-        res.render('partials/canvaspartial', {user: req.user});
-    }
+        //create request var fro sql query
+        var request = new sql.Request();
+        //put the result into an arry to access later on
+        request.query("SELECT iconName,filePath FROM Default_Icons ", function (err, results) {       
+        if (err) console.log(err);
+
+        res.render('partials/canvaspartial', {results: results});
+     
+        });//end query
+    }//end if
     //else render the home page without the user variable
     else {
         res.render('pages/login', {req: req});
-    }
+    }//end else
 });
 
 router.get('/MyLogos', function(req, res, next) { 
