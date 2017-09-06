@@ -18,7 +18,7 @@ router.post('/getOneLogo', function(req, res, next) {
     var request = new sql.Request();
     request.query("SELECT filePath FROM Customer_Logos WHERE logoID =  '"+req.body.pictureId+"'", function(err, results){
         if (err) throw err;
-        console.log(results[0].filePath);
+        res.render('partials/logospartial', {user: req.user});
     });
 });
 
@@ -112,13 +112,11 @@ router.get('/CreateLogo', function(req, res, next) {
 
 router.get('/MyLogos', function(req, res, next) { 
     if(req.user){
-        var obj = {};
+        
         var request = new sql.Request();
-   
-        request.query("SELECT logoName,logoID FROM Customer_Logos WHERE customerId = '85E96C09-FD9F-4221-866C-7EB5D167AE1B'", function(err, results){
+        request.query("SELECT logoName,logoID, customerId FROM Customer_Logos WHERE customerId = '"+req.user.customerId+"'", function(err, results){
             if (err) throw err;
-            obj = {sql: results};
-            console.log(obj);
+            console.log(results[0]);
             res.render('partials/logospartial', {sql: results, user: req.user});
         
     });
