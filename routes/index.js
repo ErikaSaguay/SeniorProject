@@ -48,8 +48,9 @@ router.post('/createAndAddLogo', function(req, res, next) {
     var request = new sql.Request();
     
     var date = new Date().toISOString();
-    date = date.substring(0,10);
+
     console.log(date);
+    date = date.substring(0,10);
     
     request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + req.body.logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
         if (err) throw err;
@@ -60,6 +61,7 @@ router.post('/createAndAddLogo', function(req, res, next) {
             if (err) throw err;
             console.log(results[0]);
 
+            //storing image on server
             var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
             var buf = new Buffer(dataURL, 'base64');
             var logopath = 'public/assets/user_icons/' + req.user.customerId + results[0].logoId + results[0].logoName;

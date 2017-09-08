@@ -4,7 +4,7 @@ var sql = require("mssql");
 
 var config =  {
     user: 'SE425_Group3',
-    password: 'group3!!',
+    password: 'password1',
     server: 'sql.neit.edu', 
     database: 'SE425_Group3',
     port: 4500

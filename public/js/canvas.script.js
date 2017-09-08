@@ -14,10 +14,13 @@ $( document ).ready(function() {
 	bgImageSrc.push("static/images/background_images/purplesquare.png");
 	bgImageSrc.push("static/images/background_images/redsquare.png");
 
+	console.log($("#selectMenu option:selected").val());
+
+   $('#colorpicker').farbtastic('#color');
+
 	$("#step0").click(function() {
 		scene.push({
-			type: "img",
-			src: bgImageSrc[0],
+			type: "background",
 			xPos: 0,
 			yPos: 0,
 			height: c.height(),
@@ -86,6 +89,8 @@ $( document ).ready(function() {
 
 	function initializing(){ // inits all buttons, canvas, imgBuffer, and ctx objects
 		//c.css({position: 'absolute'});
+		
+
 		c.attr("width", 500)
 		c.attr("height", 500);
 		ctx = c[0].getContext("2d");
@@ -106,40 +111,24 @@ $( document ).ready(function() {
 	}
 
 	function switchCase(obj){
-		ctx.clearRect(0, 0, c.width(), c.height());
-		if(obj.length <=4){
-			for(var i = 0; i < obj.length; i++)
-			{
-				drawImage(obj,i);
-			}
-		}else{
-
-			for(var i = 0; i < obj.length - 2; i++)
-			{
-				drawImage(obj,i);
-			}
-
-			var imgBuffer = new Image();
-			imgBuffer.src = obj[3].src;
-			var loaded = new Promise(function(resolve, reject) {     
-				imgBuffer.addEventListener("load", resolve);
-			});
-
-			loaded.then(function() {
-			   // imgProperties(imgBuffer, obj[i]);
-				ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
-				ctx.font = obj[4].font;
-				//ctx.textAlign = obj[i].textAlign;
-				//ctx.fillText(obj[i].textValue, (obj[i - 1].xPos + obj[i].xPos) / 2 ,obj[i - 1].yPos + obj[i - 1].height + 20);
-				
-				ctx.fillText(obj[4].textValue, 205,205);
-				dataURL = c[0].toDataURL();
-				$('#dataURL').val(dataURL);
-			});
+		//drawBackground();
+		for(var i = 0; i < obj.length; i++)
+		{
+			drawImage(obj,i);
 		}
 	}
 
 	function drawImage(obj, i){
+		switch(obj[i].type) {
+
+			case 'background':
+				drawBackground();
+				console.log('bg');
+			break;
+
+			case 'img':
+				if(obj.length < 5) {
+				// if object doesn't have text, don't write text in onload function
 				var imgBuffer = new Image();
 				imgBuffer.src = obj[i].src;
 				var loaded = new Promise(function(resolve, reject) {     
@@ -147,9 +136,46 @@ $( document ).ready(function() {
 				});
 
 				loaded.then(function() {
-				   // imgProperties(imgBuffer, obj[i]);
 					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
+					console.log(obj[i].position)
 				});
+			 }
+			else{
+				if(obj[i].position == 3) {
+					// if object doesn't have text, don't write text in onload function
+					var imgBuffer = new Image();
+					imgBuffer.src = obj[i].src;
+					var loaded = new Promise(function(resolve, reject) {     
+						imgBuffer.addEventListener("load", resolve);
+						console.log(obj[i].position)
+					});
+					loaded.then(function() {
+						ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
+						ctx.font = obj[4].font;
+						ctx.fillStyle = 'black';
+						ctx.fillText(obj[4].textValue, 205,205);
+						dataURL = c[0].toDataURL();
+						$('#dataURL').val(dataURL);
+					});
+					// loaded.the
+				}
+				//if object length is 5, write text after all images have loaded
+				var imgBuffer = new Image();
+				imgBuffer.src = obj[i].src;
+				var loaded = new Promise(function(resolve, reject) {     
+					imgBuffer.addEventListener("load", resolve);
+				});
+				loaded.then(function() {
+					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
+					console.log(obj[i].position)
+				});
+							
+			}
+			break;
+
+			default:
+			break;
+		}
 	}
 
 	function disableAndEnableStep(num) {
@@ -157,6 +183,10 @@ $( document ).ready(function() {
 		$("#step" + (num + 1)).css("visibility", "visible");
 	}
 
+	function drawBackground(fillStyle) {
+		ctx.fillStyle=$('#color').val();
+		ctx.fillRect(0,0,500,500);
+	}
 	//Events
 	
 	// b.onclick = function() {
@@ -170,16 +200,17 @@ $( document ).ready(function() {
 		{
 			$("#step0").css("visibility", "visible");
 			$("#step" + (scene.length + 1)).css("visibility", "hidden");
+
+			ctx.clearRect(0, 0, c.width(), c.height());
+			console.log('clear everything')
 		}
 		else
 		{
 			$("#step" + (scene.length)).css("visibility", "visible");
 			$("#step" + (scene.length + 1)).css("visibility", "hidden");
-		}
 		switchCase(scene);
+		}
 	};
-
-	//document.getElementById("submit").addEventListener("click", submitClick);
 
 	document.getElementById("dl").addEventListener("click", dlCanvas, false);
 
@@ -204,6 +235,5 @@ $( document ).ready(function() {
 		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
 		this.href = dt;
 	};
-
 
 });
