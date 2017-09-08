@@ -103,8 +103,9 @@ li a {
 /*------Help Page--------*/
 .how-pic {
     width: 30%;
-    height: 30%;
-
+    height: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 .how-text {

@@ -10,9 +10,9 @@ $( document ).ready(function() {
 	var dataURL = "";
   
 	var bgImageSrc = [];
-	bgImageSrc.push("static/images/background_images/bluesquare.png");
-	bgImageSrc.push("static/images/background_images/purplesquare.png");
-	bgImageSrc.push("static/images/background_images/redsquare.png");
+	bgImageSrc.push("images/background_images/bluesquare.png");
+	bgImageSrc.push("images/background_images/purplesquare.png");
+	bgImageSrc.push("images/background_images/redsquare.png");
 
 	console.log($("#selectMenu option:selected").val());
 
@@ -33,7 +33,7 @@ $( document ).ready(function() {
 	$("#step1").click(function() { //(c.width()- obj[i].width )/ 2
 		scene.push({
 			type: "img",
-			src: "static/images/circle_outline.png",
+			src: "images/circle_outline.png",
 			xPos: 50,
 			yPos: 50,
 			height: 400,
@@ -46,7 +46,7 @@ $( document ).ready(function() {
 	$("#step2").click(function() {
 		scene.push({
 			type: "img",
-			src: "static/images/circle_outline.png",
+			src: "images/circle_outline.png",
 			xPos: 100,
 			yPos: 100,
 			height: 300,
