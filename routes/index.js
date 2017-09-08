@@ -58,11 +58,9 @@ router.post('/createAndAddLogo', function(req, res, next) {
         var request = new sql.Request();
         request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+req.body.logoName+ '.png' +"'", function(err, results){
             if (err) throw err;
-            console.log(results[0]);
-
             var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
             var buf = new Buffer(dataURL, 'base64');
-            var logopath = 'public/assets/user_icons/' + req.user.customerId + results[0].logoId + results[0].logoName;
+            var logopath = 'public/assets/user_icons/' + results[0].logoId + results[0].logoName;
             fs.writeFile(logopath, buf);
         });
             req.flash('message', 'Uploaded');
@@ -119,7 +117,7 @@ router.get('/MyLogos', function(req, res, next) {
             console.log(results[0]);
             res.render('partials/logospartial', {sql: results, user: req.user});
         
-    });
+        });
     }
     //else render the home page without the user variable
     else {
