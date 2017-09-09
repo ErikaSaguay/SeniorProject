@@ -2,28 +2,46 @@
 
 <div class='container-fluid'>
 	<div class="row">
-    
- 	<div class='col-md-6'><canvas id="logoCanvas" ></canvas></div>
- 	<div class="col-md-2"><button class='btn btn-primary' id="step0">Background Color</button></div>
- 	<div class="col-md-2"><input type="text" id="color" name="color" value="#123456" />
-
-<div id="colorpicker"></div></div>
- 	<div class="col-md-2"></div>
+		<div class='col-md-6'><canvas id="logoCanvas" ></canvas></div>
+</div>
+<div class='container-fluid' >
+  	<div class="row">
+		<div class="col-md-3"><button class='btn btn-danger' id="previousStep">Back</button></div>
+  	</div>
+  	<div class="row">
+		<div class="col-md-3"><button class='btn btn-primary' id="step0">Background Color</button></div>
+		<div class="col-md-3">Color: <input class="jscolor" value="ab2567"></div>
+  	</div>
+  	<div class="row">
+		<div class="col-md-3"><button class='btn btn-primary' id="step1">Outer Shape</button></div>
+		<div class="col-md-3">Color: <input class="jscolor" value="ab2567"></div>
+  	</div>
+  	<div class="row">
+		<div class="col-md-3"><button class='btn btn-primary' id="step2">Inner Shape</button></div>
+		<div class="col-md-3">Color: <input class="jscolor" value="ab2567"></div>
+  	</div>
+  	<div class="row">
+		<div class="col-md-3"><button class='btn btn-primary' id="step3">Icon</button></div>
+		<div class="col-md-3"><select id='selectMenu'>
+			<% for(var i=0; i < results.length; i++) { %>
+			<option value='<%= results[i].filePath %>'><%= results[i].iconName%></option>
+			<% } %></select>
+		</div>
+  	</div>
+  	<div class="row">
+		<div class="col-md-2"><button class='btn btn-primary' id="step4">Text</button></div>
+		<div class="col-md-2"><input id="canvasText" value=""></div>
   	</div>
 </div>
+
 <select id='selectMenu'>
 	<% for(var i=0; i < results.length; i++) { %>
 	<option value='<%= results[i].filePath %>'><%= results[i].iconName%></option>
 	<% } %>
 </select>
 	<div>
-	    <button class='btn btn-danger' id="previousStep">Back</button>
+	    
 	  <ul>
-	  <li></li>
-	  <li><button class='btn btn-primary' id="step1">Outer Shape</button></li>
-	  <li><button class='btn btn-primary' id="step2">Inner Shape</button></li>
-	  <li><button class='btn btn-primary' id="step3">Icon</button></li>
-	  <li><button class='btn btn-primary' id="step4">Text</button></li>
 	  <a id="dl" download="Canvas.png" href="#">Download Canvas</a>
 	  </ul>
 	</div>
