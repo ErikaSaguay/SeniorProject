@@ -2,12 +2,19 @@
 <html>
 <head>
     <title></title>
-    <script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/spectrum.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/script.js"></script>
 	<meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+         <link href="css/login.css" rel="stylesheet">
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/js/farbtastic.js"></script>
+
+    
     <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    
+<% if(typeof(user) !== 'undefined') { %>
     <nav id="web-nav">
 		<a href="#"><img class="logo" src="images/logo.png"></a>
         <ul id="menu">
@@ -15,18 +22,19 @@
 			<li><a href="/MyLogos" class="bordered-text" id="nav-logos-btn">Logos</a></li>
 			<li><a href="/CreateLogo" class="bordered-text" id="nav-create-btn">Create</a></li>
 			<li><a href="/Help" class="bordered-text" id="nav-help-btn">Help</a></li>
-			 <% if(typeof(user) !== 'undefined') { %>
+			 
                    	 <li><a href="/logout" class="bordered-text" >Logout</a></li>
-           		 <% } %>
+           		
 		</ul> 
 	</nav>
+<% } %>
+
 </head>
 <body >
 	<div id="content-wrapper">
 	<%- body %>
 	
-	<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
-        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
 	</div>
 </body>
 </html>

@@ -48,20 +48,12 @@ passport.use('login', new LocalStrategy({
                 req.flash('message', "No user with the username: " + user + " was found.");
                 done(null, false);
             }
-            
                 else if(passwordHash.verify(password, results[0].password) === true){
                     //store userId in the variable using the passport session
-                    req.flash('message', 'Successfully logged in!');
                     console.log('Successfully Logged In!');
-                    //successfully logged in pass user object
-                    //console.log(results[0].userName + results[0].password);
                     done(null, results[0]);
-                    console.log(user.customerId);
-                    var sessionID = user.customerId;
-                    console.log("This is the sessionID: " + sessionID);
                 }
                 else{
-                    
                     console.log('Invalid Password!');
                     req.flash('message', 'Invalid Password');
                     done(null, false);
