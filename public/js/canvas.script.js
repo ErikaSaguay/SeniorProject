@@ -24,7 +24,7 @@ $( document ).ready(function() {
 	$("#step1").click(function() { //(c.width()- obj[i].width )/ 2
 		scene.push({
 			type: "img",
-			src: "images/circle_outline.png",
+			src: $("#selectMenuShape1 option:selected").val(),
 			xPos: 50,
 			yPos: 50,
 			height: 400,
@@ -37,7 +37,7 @@ $( document ).ready(function() {
 	$("#step2").click(function() {
 		scene.push({
 			type: "img",
-			src: "images/circle_outline.png",
+			src: $("#selectMenuShape2 option:selected").val(),
 			xPos: 100,
 			yPos: 100,
 			height: 300,
@@ -93,8 +93,8 @@ $( document ).ready(function() {
 	}
 
 	function initSteps(i){ // create steps button id's
-		steps[i] = document.getElementById("step" + i);
-		if (i != 0) {steps[i].style.visibility = "hidden";}
+		steps[i] = $("#step" + i);
+		if (i != 0) {steps[i].prop("disabled", true);}
 	}
 
 	function rotate(degrees) { // rotates image on selected canvas
@@ -170,8 +170,8 @@ $( document ).ready(function() {
 	}
 
 	function disableAndEnableStep(num) {
-		$("#step" + num).css("visibility", "hidden");
-		$("#step" + (num + 1)).css("visibility", "visible");
+		$("#step" + num).prop("disabled", true);
+		$("#step" + (num + 1)).prop("disabled", false);
 	}
 
 	function drawBackground(fillStyle) {
@@ -189,16 +189,16 @@ $( document ).ready(function() {
 		drawOrder--;
 		if (scene.length == 0)
 		{
-			$("#step0").css("visibility", "visible");
-			$("#step" + (scene.length + 1)).css("visibility", "hidden");
+			$("#step0").prop("disabled", false);
+			$("#step" + (scene.length + 1)).prop("disabled", true);
 
 			ctx.clearRect(0, 0, c.width(), c.height());
 			console.log('clear everything')
 		}
 		else
 		{
-			$("#step" + (scene.length)).css("visibility", "visible");
-			$("#step" + (scene.length + 1)).css("visibility", "hidden");
+			$("#step" + (scene.length)).prop("disabled", false);
+			$("#step" + (scene.length + 1)).prop("disabled", true);
 		switchCase(scene);
 		}
 	};
