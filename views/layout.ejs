@@ -10,22 +10,39 @@
          <link href="css/login.css" rel="stylesheet">
     <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/js/farbtastic.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    <script src="https://use.fontawesome.com/2779c7d352.js"></script>
+
     
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+<div id="wrapper">
 <% if(typeof(user) !== 'undefined') { %>
-    <nav id="web-nav">
-		<a href="#"><img class="logo" src="images/logo.png"></a>
-        <ul id="menu">
-			<li><a href="/" class="bordered-text bordered-text-focus" id="nav-home-btn">Home</a></li>
-			<li><a href="/MyLogos" class="bordered-text" id="nav-logos-btn">Logos</a></li>
-			<li><a href="/CreateLogo" class="bordered-text" id="nav-create-btn">Create</a></li>
-			<li><a href="/Help" class="bordered-text" id="nav-help-btn">Help</a></li>
-			 
-                   	 <li><a href="/logout" class="bordered-text" >Logout</a></li>
-           		
-		</ul> 
-	</nav>
+
+<!-- Sidebar -->
+        <div id="sidebar-wrapper">
+
+                    <img class="logo" src="images/logo.png">
+                    
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="/" class="bordered-text bordered-text-focus" id="nav-home-btn"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+                </li>
+                <li>
+                    <a href="/MyLogos" class="bordered-text" id="nav-logos-btn"><i class="fa fa-picture-o" aria-hidden="true"></i> Logos</a>
+                </li>
+                <li>
+                    <a href="/CreateLogo" class="bordered-text" id="nav-create-btn"><i class="fa fa-plus-square" aria-hidden="true"></i> Create</a>
+                </li>
+                <li>
+                    <a href="/Help" class="bordered-text" id="nav-help-btn"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
+                </li>
+                
+                <li><a href="/logout" class="bordered-text" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        
 <% } %>
+</div>
 
 </head>
 <body >

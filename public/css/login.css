@@ -128,10 +128,10 @@ a:hover {
 }
 
 .form {
-  background: rgba(19, 35, 47, 0.9) !important;
+  background: #E5FDF7;
   padding: 40px !important;
   max-width: 600px !important;
-  margin: 40px auto !important;
+  margin: 40px 160px !important;
   border-radius: 4px !important;
   box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3) !important;
 }
@@ -179,7 +179,7 @@ a:hover {
 
 h1 {
   text-align: center;
-  color: #ffffff;
+  color: #1ab188;
   font-weight: 300;
   margin: 0 0 40px;
 }
@@ -189,7 +189,7 @@ label {
   -webkit-transform: translateY(6px);
   transform: translateY(6px);
   left: 13px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #1ab188;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
