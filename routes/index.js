@@ -89,7 +89,6 @@ router.get('/Help', function(req, res, next) {
     else {
         res.render('pages/login', {req: req});
     }
-
 });
 
 router.get('/CreateLogo', function(req, res, next) { 
@@ -100,8 +99,10 @@ router.get('/CreateLogo', function(req, res, next) {
         request.query("SELECT iconName,filePath FROM Default_Icons ", function (err, results) {       
         if (err) console.log(err);
 
-        res.render('partials/canvaspartial', {results: results});
-     
+            request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
+                if (err) console.log(err);
+                res.render('partials/canvaspartial', {results: results, bgImages: bgImages});
+            });//end query
         });//end query
     }//end if
     //else render the home page without the user variable
@@ -118,7 +119,6 @@ router.get('/MyLogos', function(req, res, next) {
             if (err) throw err;
             console.log(results[0]);
             res.render('partials/logospartial', {sql: results, user: req.user});
-        
         });
     }
     //else render the home page without the user variable
