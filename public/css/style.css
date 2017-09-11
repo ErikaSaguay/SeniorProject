@@ -267,3 +267,9 @@ body{
 #font5{
     font-family: 'Poiret One', cursive;
 }
+
+.colorDiv{
+height: 200px;
+    width: 50%;
+    background-color: powderblue;
+}

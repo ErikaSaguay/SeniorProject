@@ -8,15 +8,6 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
-  
-	var bgImageSrc = [];
-	bgImageSrc.push("images/background_images/bluesquare.png");
-	bgImageSrc.push("images/background_images/purplesquare.png");
-	bgImageSrc.push("images/background_images/redsquare.png");
-
-	console.log($("#selectMenu option:selected").val());
-
-   $('#colorpicker').farbtastic('#color');
 
 	$("#step0").click(function() {
 		scene.push({
@@ -70,10 +61,10 @@ $( document ).ready(function() {
 		switchCase(scene);
 	});
 	$("#step4").click(function() {
-		
+		console.log($('#canvasText').val());
 		scene.push({
 			type: "img",
-			textValue: "GoLogos",
+			textValue: $('#canvasText').val(),
 			src: "",
 			height: 0,
 			width: 0,
@@ -184,7 +175,7 @@ $( document ).ready(function() {
 	}
 
 	function drawBackground(fillStyle) {
-		ctx.fillStyle=$('#color').val();
+		ctx.fillStyle = '#' + $('.jscolor').val();
 		ctx.fillRect(0,0,500,500);
 	}
 	//Events

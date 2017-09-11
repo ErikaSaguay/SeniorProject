@@ -11,6 +11,7 @@ var flash = require('connect-flash-plus');
 var path = require('path');
 var fs = require('file-system');
 var os = require('os');
+var validator = require('validator');
 
 var iconName = "Planner";
 
@@ -36,20 +37,28 @@ router.post('/insertLogo', function(req, res, next) {
 });
 
 router.post('/removeOneLogo', function(req, res, next) {
-    var request = new sql.Request();
-    request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
-        if (err) throw err;
-        console.log("logo removed");
-    });
+      console.log(req.body.pictureId);
+      var request = new sql.Request();
+        request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
+            if (err) throw err;
+            res.redirect('/MyLogos');
+        });
+    
 });
 
 router.post('/createAndAddLogo', function(req, res, next) {
+    if(req.body.logoName.search(/[^A-Za-z\s]/) != -1)
+    {
+        req.flash('message', 'something went wrong');
+        return res.redirect('/');
+        //return res.render('partials/homepartial.ejs', {req: req, user: req.user});
+    }
 
     var request = new sql.Request();
+
+
     
     var date = new Date().toISOString();
-
-    console.log(date);
     date = date.substring(0,10);
     
     request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + req.body.logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
