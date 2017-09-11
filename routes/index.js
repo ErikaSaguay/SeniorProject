@@ -37,11 +37,13 @@ router.post('/insertLogo', function(req, res, next) {
 });
 
 router.post('/removeOneLogo', function(req, res, next) {
-    var request = new sql.Request();
-    request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
-        if (err) throw err;
-        console.log("logo removed");
-    });
+      console.log(req.body.pictureId);
+      var request = new sql.Request();
+        request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
+            if (err) throw err;
+            res.redirect('/MyLogos');
+        });
+    
 });
 
 router.post('/createAndAddLogo', function(req, res, next) {
