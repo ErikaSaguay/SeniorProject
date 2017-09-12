@@ -14,14 +14,13 @@
                         </div>
                             <div class="panel-body">
                                 <p class="profile-name"><%= logos.logoName %></p>
-
+                                <a  class="download" href="assets/user_icons/<%= logos.logoID+logos.logoName %>" download="<%= logos.logoName %>">download</a>
                                 <div >
 
                                     <input type="hidden" name='pictureId' value="<%= logos.logoID %>">
 
-                                    <button href="/removeOneLogo/<%= logos.logoID %>/" class="btn btn-default">Delete</button>
-                                    <button class="btn btn-default" data-toggle="confirmation">Confirmation</button>
-                          
+                                    <a href="/removeOneLogo/<%= logos.logoID %>/" type="button" class="btn btn-default">Delete</a>
+
                            	    </div>  
                             </div>
                     </div>
@@ -65,34 +64,5 @@
 
     <!-- //.modal-profile -->
 
-    <!-- modal-submit -->
-
-    <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-
-                <div class="modal-header">
-
-                    Confirm Submit
-
-                </div>
-
-                <div class="modal-body">Are you sure you want to delete logo? </div>
-
-                <div class="modal-footer">
-
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-
-                    <a href="#" id="submit" class="btn btn-success success">Submit</a>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
 
 </div>
