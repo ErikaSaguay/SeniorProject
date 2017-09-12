@@ -5,23 +5,14 @@
         <div class="row" id="profile-grid">
 
         	<% sql.forEach(function (logos) { %>
-
                 <div class="col-sm-4 col-xs-12 profile">
-
                     <div class="panel panel-default">
-
                         <div class="panel-thumbnail">
-
                             <a href="#" title="<%= logos.logoName %>" class="thumb">
-
                                 <img src="assets/user_icons/<%= logos.logoID+logos.logoName %>" class="img-responsive img-rounded" data-toggle="modal" data-target=".modal-profile-lg">
-
                             </a>
-
                         </div>
-
                             <div class="panel-body">
-
                                 <p class="profile-name"><%= logos.logoName %></p>
 
                                 <div >
@@ -31,11 +22,8 @@
                                     <a href="/removeOneLogo/<%= logos.logoID %>/" type="button">Kill me</a>
                           
                            	    </div>  
-
                             </div>
-
                     </div>
-
                 </div>
                                        
             <% }) %>
@@ -107,4 +95,3 @@
     </div>
 
 </div>
-

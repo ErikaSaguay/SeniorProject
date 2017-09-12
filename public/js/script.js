@@ -44,14 +44,6 @@ $(document).ready(function () {
       	content.html($(this).html());
       	$(".modal-profile").modal({show:true});
     });
-	$('.delete-btn').click(function() {
-     
-    });
-
-    $('#submit').click(function(){
-
-        $('.formfield').submit();
-    });
 
 
 });
