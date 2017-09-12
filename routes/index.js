@@ -102,7 +102,7 @@ router.get('/CreateLogo', function(req, res, next) {
 
             request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
                 if (err) console.log(err);
-                res.render('partials/canvaspartial', {results: results, bgImages: bgImages});
+                res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user});
             });//end query
         });//end query
     }//end if
