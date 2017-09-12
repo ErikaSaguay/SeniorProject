@@ -68,9 +68,9 @@ $( document ).ready(function() {
 			src: "",
 			height: 0,
 			width: 0,
-			xPos: 250,
-			yPos: 250,
-			font: "45px Indie Flower",
+			xPos: 205,
+			yPos: 205,
+			font: "45px Nunito",
 			textAlign: "center",
 			position: 4
 		});
@@ -144,7 +144,7 @@ $( document ).ready(function() {
 						ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
 						ctx.font = obj[4].font;
 						ctx.fillStyle = 'black';
-						ctx.fillText(obj[4].textValue, 205,205);
+						ctx.fillText(obj[4].textValue, obj[4].xPos,obj[4].yPos);
 						dataURL = c[0].toDataURL();
 						$('#dataURL').val(dataURL);
 					});
@@ -228,5 +228,54 @@ $( document ).ready(function() {
 		this.href = dt;
 	};
 
+	$( "#leftArrow" ).click(function() {
+		if(scene.length > 1) {
+			scene[scene.length-1].xPos = scene[scene.length-1].xPos-10;
+			switchCase(scene);
+		}
+	});
 
+	$( "#rightArrow" ).click(function() {
+		if(scene.length > 1 ) {
+			scene[scene.length-1].xPos = scene[scene.length-1].xPos+10;
+			switchCase(scene);
+		}
+	});
+
+	$( "#upArrow" ).click(function() {
+		if(scene.length > 1 ) {
+			scene[scene.length-1].yPos = scene[scene.length-1].yPos-10;
+			switchCase(scene);
+		}
+	});
+
+	$( "#downArrow" ).click(function() {
+		if(scene.length > 1 ) {
+			scene[scene.length-1].yPos = scene[scene.length-1].yPos+10;
+			switchCase(scene);
+		}
+	});
+
+	$( "#grow" ).click(function() {
+		if(scene.length > 1 && scene.length < 5) {
+			scene[scene.length-1].height = scene[scene.length-1].height+10;
+			scene[scene.length-1].width = scene[scene.length-1].width+10;
+			switchCase(scene);
+		}else if(scene.length == 5) {
+			var fontSize = parseInt(scene[scene.length -1].font.substring(0,2));
+			fontSize = fontSize + 5;
+			scene[scene.length -1].font.setCharAt(0, fontSize.toString());
+			console.log(scene[scene.length -1].font);
+		}
+	});
+
+	$( "#shrink" ).click(function() {
+		if(scene.length > 1 && scene.length < 5) {
+			scene[scene.length-1].height = scene[scene.length-1].height-10;
+			scene[scene.length-1].width = scene[scene.length-1].width-10;
+			switchCase(scene);
+		}else if(scene.length == 5) {
+			
+		}
+	});
 });
