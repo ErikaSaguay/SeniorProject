@@ -36,10 +36,10 @@ router.post('/insertLogo', function(req, res, next) {
     });
 });
 
-router.post('/removeOneLogo', function(req, res, next) {
-      console.log(req.body.pictureId);
+router.get('/removeOneLogo/:logoId', function(req, res, next) {
+      console.log(req.params.logoId);
       var request = new sql.Request();
-        request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.body.pictureId+"'", function (err, result) {
+        request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.params.logoId+"'", function (err, result) {
             if (err) throw err;
             res.redirect('/MyLogos');
         });
