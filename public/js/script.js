@@ -43,7 +43,7 @@ $('a.thumb').click(function(event){
       	$('.modal-title').html(title);      	
       	content.html($(this).html());
       	$(".modal-profile").modal({show:true});
-    });
+});
 
 
 });
