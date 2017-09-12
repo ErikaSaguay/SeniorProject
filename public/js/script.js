@@ -35,7 +35,7 @@ $(document).ready(function () {
       $('#' + targetSection).delay(400).fadeIn(400);
     }
   });
-	$('a.thumb').click(function(event){
+$('a.thumb').click(function(event){
     	event.preventDefault();
     	var content = $('.modal-body');
     	content.empty();
