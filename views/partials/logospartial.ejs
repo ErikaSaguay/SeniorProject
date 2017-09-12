@@ -12,12 +12,14 @@
                   </div>
                   <div class="panel-body">
                       <p class="profile-name"><%= logos.logoName %></p>
+
                         <a  class="download" href="assets/user_icons/<%= logos.logoID+logos.logoName %>" download="<%= logos.logoName %>">Download</a>
-                        <a href="/removeOneLogo/<%= logos.logoID %>/" type="button" class="btn btn-default">Delete</a>
+
+                        <a href="#" title="<%= logos.logoID %>" type="button" class="btn btn-default delete-btn" data-toggle="modal" data-target="#confirm-submit">Delete</a>
 
                   </div>  
               </div>
-          </div>
+          </div> 
                
             <% }) %>
     </div> 
@@ -44,7 +46,7 @@
 
 <!-- modal-submit -->
 
-<div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade modal-submit" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
