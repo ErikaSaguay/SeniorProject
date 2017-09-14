@@ -129,6 +129,10 @@ $( document ).ready(function() {
 				loaded.then(function() {
 					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
 					console.log(obj[i].position)
+					$('#dataURL').val(dataURL);
+					console.log()
+					dataURL = c[0].toDataURL();
+					$('#dataURL').val(dataURL);
 				});
 			 }
 			else{
@@ -159,6 +163,8 @@ $( document ).ready(function() {
 				loaded.then(function() {
 					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
 					console.log(obj[i].position)
+					dataURL = c[0].toDataURL();
+					$('#dataURL').val(dataURL);
 				});
 							
 			}
@@ -178,6 +184,8 @@ $( document ).ready(function() {
 		ctx.fillStyle="#" + $('.jscolor').val();
 		console.log($('.jscolor').val());
 		ctx.fillRect(0,0,500,500);
+		dataURL = c[0].toDataURL();
+		$('#dataURL').val(dataURL);
 	}
 	//Events
 	

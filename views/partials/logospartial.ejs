@@ -1,3 +1,18 @@
+<%
+
+    var messages = req.flash("message");
+
+    if (messages.length > 0){
+
+  %>
+
+      <% for(msg in messages) { %>
+                        
+          <div class="alert alert-dark"><h3><%= messages[msg] %><h3></div>
+
+      <% } %>
+
+<% } %>
 <div>
   <h1 id="logosTitle">Logos</h1>
     <div class="row" id="profile-grid">

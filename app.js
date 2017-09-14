@@ -7,13 +7,12 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var flash = require('connect-flash-plus');
 var bodyParser = require('body-parser');
 var http = require('http');
 var sql = require('mssql');
 var passwordHash = require('password-hash');
 var passport = require('passport');
-var flash = require('connect-flash');
+var flash = require('connect-flash-plus');
 
 require('./models/dbconnection');
 
@@ -26,9 +25,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static("views"));
 
 //initialize passport and the session variable that will hold the user info. 
-app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
+app.use(session({ 
+    secret: 'keyboard cat',
+    resave: true, 
+    saveUninitialized:true})); // session secret
+
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+
 
 
 
@@ -46,7 +51,6 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-app.use(flash());
 
 
 app.use('/',routes);

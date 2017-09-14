@@ -3,10 +3,10 @@ var router = express.Router();
 var sql = require('mssql');
 var session = require('express-session');
 var dateFormat = require('dateformat');
+var validator = require('validator');
 
 //flash messages
 var session = require('express-session');
-var flash = require('connect-flash-plus');
 
 var path = require('path');
 var fs = require('file-system');
@@ -45,29 +45,37 @@ router.get('/removeOneLogo/:logoId', function(req, res, next) {
 });
 
 router.post('/createAndAddLogo', function(req, res, next) {
-
+    if(!validator.isAlphanumeric(req.body.logoName))
+    {
+        console.log('isAlpha');
+        req.flash('message', 'Error: Upload Unsuccesful. Invalid Characters in Logo Name');
+        return res.redirect('/CreateLogo');
+        
+    }
     var request = new sql.Request();
-    
     var date = new Date().toISOString();
-
-    console.log(date);
     date = date.substring(0,10);
     
     request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + req.body.logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
-        if (err) throw err;
+        if (err) 
+            {
+                req.flash('message', 'Something went wrong with uploading.');
+                res.redirect('/');
+            }
         console.log("Logo was inserted");
-        //should show how many rows were effected;
-        var request = new sql.Request();
         request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+req.body.logoName+ '.png' +"'", function(err, results){
             if (err) throw err;
 
+            /* turns the data url to an img format*/
             var dataURL = req.body.dataURL.replace(/^data:image\/\w+;base64,/, "");
             var buf = new Buffer(dataURL, 'base64');
             var logopath = 'public/assets/user_icons/' + results[0].logoId + results[0].logoName;
+            /* writes the img to the server */
             fs.writeFile(logopath, buf);
         });
-            req.flash('message', 'Uploaded');
-            res.redirect('/');
+
+            req.flash('message', 'Uploaded new Logo!');
+            res.redirect('/MyLogos');
     });
 });
 
@@ -105,9 +113,9 @@ router.get('/CreateLogo', function(req, res, next) {
                 
                 request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
                 if (err) console.log(err);
-                res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user});
+                res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user, req: req});
                 
-            });
+                });
             });//end query
         });//end query
     }//end if
@@ -124,7 +132,7 @@ router.get('/MyLogos', function(req, res, next) {
         request.query("SELECT logoName,logoID, customerId FROM Customer_Logos WHERE customerId = '"+req.user.customerId+"'", function(err, results){
             if (err) throw err;
             console.log(results[0]);
-            res.render('partials/logospartial', {sql: results, user: req.user});
+            res.render('partials/logospartial', {sql: results, user: req.user, req: req});
         });
     }
     //else render the home page without the user variable

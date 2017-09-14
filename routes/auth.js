@@ -7,7 +7,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
 var Sequelize = require('sequelize');
-var flash = require('connect-flash');
 
 router.get('/', function(req, res, next) {  
     res.render('pages/login', {req:req});
@@ -50,6 +49,7 @@ passport.use('login', new LocalStrategy({
             }
                 else if(passwordHash.verify(password, results[0].password) === true){
                     //store userId in the variable using the passport session
+                    req.flash('message', 'Welcome ' + user + "!");
                     console.log('Successfully Logged In!');
                     done(null, results[0]);
                 }

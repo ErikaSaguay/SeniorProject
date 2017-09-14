@@ -1,129 +1,65 @@
 <%
-
 		var messages = req.flash("message");
-
 		if (messages.length > 0){
-
 	%>
-
-			<% for(msg in messages) { %>
-                        
+			<% for(msg in messages) { %>                        
           <div class="alert alert-dark"><h3><%= messages[msg] %><h3></div>
-
-			<% } %>
-
+		<% } %>
 <% } %>
-        
 <div class="form">
-
   <ul class="tab-group">
 
     <li class="tab active"><a href="#signup">Sign Up</a></li>
-
     <li class="tab"><a href="#login">Log In</a></li>
-
-  </ul>
-      
+  </ul>      
   <div class="tab-content">
+    <div id="signup">   
+      <h1>Sign Up for Free</h1>          
+        <form action="/auth/signup" method="post">  
 
-        <div id="signup">   
-
-          <h1>Sign Up for Free</h1>
-          
-          <form action="/auth/signup" method="post">
-          
-            <div class="top-row">
-
-              <div class="field-wrap">
-
-              <label>First Name<span class="req">*</span></label>
-
-              <input type="text" required autocomplete="off" name="firstName" id='firstName'/>
-
-              </div>
-        
-              <div class="field-wrap">
-
-                <label>Last Name<span class="req">*</span></label>
-
-                <input type="text" required autocomplete="off" name="lastName" id='lastName'/>
-
-              </div>
-
-            </div>
-              
-          <div class="field-wrap">
-
-            <label> Username<span class="req">*</span></label>
-
-            <input type="text" required autocomplete="off" name='signUsername' id='signUsername'/>
-
-          </div>
-
-          <div class="field-wrap">
-
-            <label>Password<span class="req">*</span></label>
-
-            <input type="password" required autocomplete="off" name="signPassword" id="signPassword"/>
-
-          </div>
-
-          <div class="field-wrap">
-
-            <label>Confirm Password<span class="req">*</span></label>
-
-            <input type="password" required autocomplete="off" name="signPassword2" id="signPassword2"/>
-
-          </div>
-
-          <button type="submit" class="button button-block"/>Get Started</button>
-          
-          </form>
-
-        </div>
-        
-        <div id="login">
-            
-          <h1>Welcome Back!</h1>
-          
-          <form action="/auth/login" method="post">
-          
+          <div class="top-row">
             <div class="field-wrap">
+              <label>First Name<span class="req">*</span></label>
+              <input type="text" required autocomplete="off" name="firstName" id='firstName'/>
+            </div>     
+            <div class="field-wrap">
+              <label>Last Name<span class="req">*</span></label>
+              <input type="text" required autocomplete="off" name="lastName" id='lastName'/>
+            </div>
+          </div>     
 
-            <label>
-
-              Username<span class="req">*</span>
-
-            </label>
-
-            <input type="text" required autocomplete="off" name="userName" id="userName"/>
-
-          </div>
-          
           <div class="field-wrap">
-
-            <label>
-
-              Password<span class="req">*</span>
-
-            </label>
-
-            <input type="password" required autocomplete="off" name="password" id="password"/>
-
+            <label> Username<span class="req">*</span></label>
+            <input type="text" required autocomplete="off" name='signUsername' id='signUsername'/>
           </div>
-          
-          <button class="button button-block"/>Log In</button>
-          
-          </form>
-
-        </div>
+          <div class="field-wrap">
+            <label>Password<span class="req">*</span></label>
+            <input type="password" required autocomplete="off" name="signPassword" id="signPassword"/>
+          </div>
+          <div class="field-wrap">
+            <label>Confirm Password<span class="req">*</span></label>
+            <input type="password" required autocomplete="off" name="signPassword2" id="signPassword2"/>
+          </div>
+          <button type="submit" class="button button-block"/>Get Started</button>        
+        </form>
+    </div>
         
-      </div><!-- tab-content -->
-      
+      <div id="login">
+            
+        <h1>Welcome Back!</h1>
+          
+      <form action="/auth/login" method="post">
+        <div class="field-wrap">
+          <label>Username<span class="req">*</span></label>
+          <input type="text" required autocomplete="off" name="userName" id="userName"/>
+        </div>          
+        <div class="field-wrap">
+          <label>Password<span class="req">*</span></label>
+          <input type="password" required autocomplete="off" name="password" id="password"/>
+        </div>          
+        <button class="button button-block"/>Log In</button>          
+      </form>
+    </div>        
+  </div><!-- tab-content -->    
 </div> <!-- /form -->
-
 <script type="text/javascript" src="js/login.js"></script>
-        
-</body>
-
-</html>
