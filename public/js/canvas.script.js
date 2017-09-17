@@ -8,7 +8,6 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
-	$(':checkbox').checkboxpicker();
 
 	$("#step0").click(function() {
 		scene.push({
@@ -212,8 +211,12 @@ $( document ).ready(function() {
 		}
 	};
 
-	document.getElementById("dl").addEventListener("click", dlCanvas, false);
-
+	// document.getElementById("dl28").addEventListener("click", dlCanvas32, false);
+	// document.getElementById("dl64").addEventListener("click", dlCanvas64, false);
+	// document.getElementById("dl128").addEventListener("click", dlCanvas128, false);
+	$('#dl32').click(dlCanvas32);
+	$('#dl28').click(dlCanvas64);
+	$('#dl28').click(dlCanvas128);
 
 	function submitClick(){
 		var dt = c[0].toDataURL();
@@ -227,14 +230,54 @@ $( document ).ready(function() {
 		  this.href = dt;
 	}
 
-	function dlCanvas() {
+	function dlCanvas32() {
 		var dt = c[0].toDataURL();
 	    imageFoo = document.createElement('img');
 		imageFoo.src = dt;
 
 		// Style your image here
-		imageFoo.style.width = '100px';
-		imageFoo.style.height = '100px';
+		imageFoo.style.width = '32px';
+		imageFoo.style.height = '32px';
+		console.log("32");
+		// After you are done styling it, append it to the BODY element
+		document.body.appendChild(imageFoo);
+
+		var dt = c[0].toDataURL();
+		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
+		this.href = dt;
+	};
+	function dlCanvas64() {
+		var dt = c[0].toDataURL();
+	    imageFoo = document.createElement('img');
+		imageFoo.src = dt;
+
+		// Style your image here
+		imageFoo.style.width = '64px';
+		imageFoo.style.height = '64px';
+
+		// After you are done styling it, append it to the BODY element
+		document.body.appendChild(imageFoo);
+
+		var dt = c[0].toDataURL();
+		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
+		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+
+		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
+		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
+		this.href = dt;
+	};
+	function dlCanvas128() {
+		var dt = c[0].toDataURL();
+	    imageFoo = document.createElement('img');
+		imageFoo.src = dt;
+
+		// Style your image here
+		imageFoo.style.width = '128px';
+		imageFoo.style.height = '128px';
 
 		// After you are done styling it, append it to the BODY element
 		document.body.appendChild(imageFoo);
