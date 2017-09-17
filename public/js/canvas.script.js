@@ -210,13 +210,10 @@ $( document ).ready(function() {
 		switchCase(scene);
 		}
 	};
-
-	// document.getElementById("dl28").addEventListener("click", dlCanvas32, false);
-	// document.getElementById("dl64").addEventListener("click", dlCanvas64, false);
-	// document.getElementById("dl128").addEventListener("click", dlCanvas128, false);
+	
 	$('#dl32').click(dlCanvas32);
-	$('#dl28').click(dlCanvas64);
-	$('#dl28').click(dlCanvas128);
+	$('#dl64').click(dlCanvas64);
+	$('#dl128').click(dlCanvas128);
 
 	function submitClick(){
 		var dt = c[0].toDataURL();
@@ -239,8 +236,6 @@ $( document ).ready(function() {
 		imageFoo.style.width = '32px';
 		imageFoo.style.height = '32px';
 		console.log("32");
-		// After you are done styling it, append it to the BODY element
-		document.body.appendChild(imageFoo);
 
 		var dt = c[0].toDataURL();
 		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
@@ -259,9 +254,6 @@ $( document ).ready(function() {
 		imageFoo.style.width = '64px';
 		imageFoo.style.height = '64px';
 
-		// After you are done styling it, append it to the BODY element
-		document.body.appendChild(imageFoo);
-
 		var dt = c[0].toDataURL();
 		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
 		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
@@ -278,9 +270,6 @@ $( document ).ready(function() {
 		// Style your image here
 		imageFoo.style.width = '128px';
 		imageFoo.style.height = '128px';
-
-		// After you are done styling it, append it to the BODY element
-		document.body.appendChild(imageFoo);
 
 		var dt = c[0].toDataURL();
 		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
