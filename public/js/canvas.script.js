@@ -77,13 +77,30 @@ $( document ).ready(function() {
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
+	$("#step5").click(function() {
+		
+		scene.push({
+			type: "img",
+			textValue: $('#canvasText2').val(),
+			src: "",
+			height: 0,
+			width: 0,
+			xPos: 185,
+			yPos: 325,
+			font: "45px " + $("#selectMenu3 option:selected").val(),
+			textAlign: "center",
+			position: 5
+		});
+		disableAndEnableStep(scene.length - 1);
+		switchCase(scene);
+	});
 
 	function initializing(){ // inits all buttons, canvas, imgBuffer, and ctx objects
 		c.attr("width", 500)
 		c.attr("height", 500);
 		ctx = c[0].getContext("2d");
 
-		for(var i = 0; i < 5; i++)
+		for(var i = 0; i < 6; i++)
 		{
 			initSteps(i);
 		}
@@ -142,14 +159,17 @@ $( document ).ready(function() {
 						console.log(obj[i].position)
 					});
 					loaded.then(function() {
-						ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
-						ctx.font = obj[4].font;
-						console.log(ctx.font);
-						ctx.fillStyle = '#' + $('#jscolorText').val();
-						console.log(ctx.fillStyle);
-						ctx.fillText(obj[4].textValue, obj[4].xPos,obj[4].yPos);
-						dataURL = c[0].toDataURL();
-						$('#dataURL').val(dataURL);
+						if(obj.length == 6)
+						{
+							ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
+							
+							drawText(obj, ++i);
+							drawText(obj, ++i);
+						}else
+						{
+							ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
+							drawText(obj, ++i);
+						}
 					});
 					// loaded.the
 				}
@@ -164,8 +184,7 @@ $( document ).ready(function() {
 					console.log(obj[i].position)
 					dataURL = c[0].toDataURL();
 					$('#dataURL').val(dataURL);
-				});
-							
+				});		
 			}
 			break;
 
@@ -174,6 +193,16 @@ $( document ).ready(function() {
 		}
 	}
 
+	function drawText(obj, i){
+		
+		ctx.font = obj[i].font;
+		console.log(ctx.font);
+		ctx.fillStyle = '#' + $('#jscolorText').val();
+		console.log(ctx.fillStyle);
+		ctx.fillText(obj[i].textValue, obj[i].xPos,obj[i].yPos);
+		dataURL = c[0].toDataURL();
+		$('#dataURL').val(dataURL);
+	}
 	function disableAndEnableStep(num) {
 		$("#step" + num).prop("disabled", true);
 		$("#step" + (num + 1)).prop("disabled", false);
@@ -210,7 +239,7 @@ $( document ).ready(function() {
 		switchCase(scene);
 		}
 	};
-	
+
 	$('#dl32').click(dlCanvas32);
 	$('#dl64').click(dlCanvas64);
 	$('#dl128').click(dlCanvas128);
