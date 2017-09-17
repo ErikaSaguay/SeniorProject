@@ -8,6 +8,7 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
+	$(':checkbox').checkboxpicker();
 
 	$("#step0").click(function() {
 		scene.push({
@@ -70,7 +71,7 @@ $( document ).ready(function() {
 			width: 0,
 			xPos: 205,
 			yPos: 205,
-			font: "45px Nunito",
+			font: "45px " + $("#selectMenu3 option:selected").val(),
 			textAlign: "center",
 			position: 4
 		});
@@ -79,9 +80,6 @@ $( document ).ready(function() {
 	});
 
 	function initializing(){ // inits all buttons, canvas, imgBuffer, and ctx objects
-		//c.css({position: 'absolute'});
-		
-
 		c.attr("width", 500)
 		c.attr("height", 500);
 		ctx = c[0].getContext("2d");
@@ -147,7 +145,9 @@ $( document ).ready(function() {
 					loaded.then(function() {
 						ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
 						ctx.font = obj[4].font;
-						ctx.fillStyle = 'black';
+						console.log(ctx.font);
+						ctx.fillStyle = '#' + $('#jscolorText').val();
+						console.log(ctx.fillStyle);
 						ctx.fillText(obj[4].textValue, obj[4].xPos,obj[4].yPos);
 						dataURL = c[0].toDataURL();
 						$('#dataURL').val(dataURL);
@@ -181,8 +181,8 @@ $( document ).ready(function() {
 	}
 
 	function drawBackground(fillStyle) {
-		ctx.fillStyle="#" + $('.jscolor').val();
-		console.log($('.jscolor').val());
+		ctx.fillStyle="#" + $('#jscolorBg').val();
+		console.log($('.jscolorBg').val());
 		ctx.fillRect(0,0,500,500);
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
@@ -221,18 +221,30 @@ $( document ).ready(function() {
 		  dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
 		  /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		  dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+		  dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
+
 
 		  this.href = dt;
 	}
 
 	function dlCanvas() {
 		var dt = c[0].toDataURL();
+	    imageFoo = document.createElement('img');
+		imageFoo.src = dt;
+
+		// Style your image here
+		imageFoo.style.width = '100px';
+		imageFoo.style.height = '100px';
+
+		// After you are done styling it, append it to the BODY element
+		document.body.appendChild(imageFoo);
+
+		var dt = c[0].toDataURL();
 		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
 		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
 
 		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=Canvas.png');
+		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
 		this.href = dt;
 	};
 
@@ -286,4 +298,5 @@ $( document ).ready(function() {
 			
 		}
 	});
+	
 });

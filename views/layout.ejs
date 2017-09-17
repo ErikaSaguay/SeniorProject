@@ -14,44 +14,45 @@
     
     <!-- Bootstrap/Javascript -->
     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script src="https://use.fontawesome.com/2779c7d352.js"></script>
+    <script type="text/javascript" src="js/bootstrap-checkbox.js" defer></script>
 	<link href="https://fonts.googleapis.com/css?family=Acme|Baloo+Tammudu|Cinzel|Dosis|Gloria+Hallelujah|Indie+Flower|Nunito|Open+Sans+Condensed:300|PT+Sans+Narrow|Permanent+Marker|Play|Raleway|Satisfy" rel="stylesheet">
 
-<div id="wrapper">
-<% if(typeof(user) !== 'undefined') { %>
-
-<!-- Sidebar -->
-        <div id="sidebar-wrapper">
-
-                    <img class="logo" src="images/logo.png">
-                    
-            <ul class="sidebar-nav">
-                <li>
-                    <a href="/" class="bordered-text bordered-text-focus" id="nav-home-btn"><i class="fa fa-home" aria-hidden="true"></i>Home</a>
-                </li>
-                <li>
-                    <a href="/MyLogos" class="bordered-text" id="nav-logos-btn"><i class="fa fa-picture-o" aria-hidden="true"></i> Logos</a>
-                </li>
-                <li>
-                    <a href="/CreateLogo" class="bordered-text" id="nav-create-btn"><i class="fa fa-plus-square" aria-hidden="true"></i> Create</a>
-                </li>
-                <li>
-                    <a href="/Help" class="bordered-text" id="nav-help-btn"><i class="fa fa-question-circle" aria-hidden="true"></i> Help</a>
-                </li>
-                
-                <li><a href="/logout" class="bordered-text" ><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
-            </ul>
-        </div>
-        <!-- /#sidebar-wrapper -->
-        
-<% } %>
-</div>
-
 </head>
-<body >
-	<div id="content-wrapper">
-	<%- body %>
-	</div>
-</body>
+    <body id='body'>
+        <div class='container' id='body-div'>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display --> 
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/">Go-Logos</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                            <% if(typeof(req.user) !== 'undefined') { %>
+                                <li><a href="/MyLogos">My Logos</a></li>
+                                <li><a href="/CreateLogo">Create Logo</a></li>
+                            <% } %>
+                            <li><a href="/Help">Help</a></li>
+                            <li><a href="/Help">Contact</a></li>
+                        </ul>
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <% if(typeof(req.user) !== 'undefined') { %>
+                            <li><button type="button" class="btn btn-default navbar-btn"><a href='/Logout'>Logout</a></button>
+                            <% }else{ %>
+                            <li><button type="button" class="btn btn-default navbar-btn"><a href='/Login'>Sign in</a></button></li>
+                            <% } %>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <div id="content-wrapper">
+                <%- body %>
+            </div>
+        </div>
+    </body>
 <script type="text/javascript" src="js/jscolor.min.js"></script>
 </html>

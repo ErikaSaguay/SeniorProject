@@ -24,24 +24,27 @@ router.get('/removeOneLogo/:logoId', function(req, res, next) {
 
 router.post('/createAndAddLogo', function(req, res, next) {
     if(req.user){
-        if(!validator.isAlphanumeric(req.body.logoName))
-        {
-            console.log('isAlpha');
-            req.flash('message', 'Error: Upload Unsuccesful. Invalid Characters in Logo Name');
+        if(req.body.dataURL == ''){
+            req.flash('message', 'Must at least have background color!');
             return res.redirect('/CreateLogo');
         }
         var request = new sql.Request();
         var date = new Date().toISOString();
         date = date.substring(0,10);
         
-        request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + req.body.logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
+        /* replaces non-alphanumerical characters with white spaces*/
+        var logoName = req.body.logoName.replace(/\W+/g, " ");
+
+        /* trims white spaces*/
+        logoName = logoName.replace(/\s/g,'');
+
+        request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
             if (err) 
             {
                 req.flash('message', 'Something went wrong with uploading.');
                 res.redirect('/');
             }
-            console.log("Logo was inserted");
-            request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+req.body.logoName+ '.png' +"'", function(err, results){
+            request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+logoName+ '.png' +"'", function(err, results){
                 if (err) throw err;
 
                 /* turns the data url to an img format*/
@@ -62,25 +65,19 @@ router.post('/createAndAddLogo', function(req, res, next) {
 });
 
 router.get('/', function(req, res, next) {
-    //if the user exists then render the homepage with the user variable
-    if(req.user){
-        res.render('partials/homepartial.ejs', {req: req, user: req.user});
-    }
-    //else render the home page without the user variable
-    else {
-        res.render('pages/login.ejs', {req: req});
-    }
+    res.render('partials/homepartial.ejs', {req: req});
 });
 
 router.get('/Help', function(req, res, next) {
-    if(req.user){
-        res.render('partials/helppartial', {user: req.user});
-    }
-    //else render the home page without the user variable
-    else {
-        req.flash('message', 'Must be logged in to do that!');
-        res.redirect('/');
-    }
+    res.render('partials/helppartial', {req: req});
+});
+
+router.get('/Contact', function(req, res, next) {
+    res.render('partials/helppartial', {req: req});
+});
+
+router.get('/Login', function(req, res, next) {
+    res.render('pages/login.ejs', {req:req});
 });
 
 router.get('/CreateLogo', function(req, res, next) { 
@@ -94,18 +91,18 @@ router.get('/CreateLogo', function(req, res, next) {
             request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
                 if (err) console.log(err);
                 
-                request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
-                if (err) console.log(err);
-                res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user, req: req});
-                
+                request.query("SELECT fontName FROM Default_Fonts ", function (err, fontNames) {       
+                    if (err) console.log(err);
+                    res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user, req: req, fontNames: fontNames });
+
                 });
-            });//end query
-        });//end query
-    }//end if
+            });//end query 1
+        });//end query 1
+    }//end if 1
     //else render the home page without the user variable
     else {
         req.flash('message', 'Must be logged in to create logo!');
-        res.redirect('/');
+        return res.redirect('/Login');
         
     }//end else
 });
@@ -123,7 +120,7 @@ router.get('/MyLogos', function(req, res, next) {
     //else render the home page without the user variable
     else {
         req.flash('message', 'Must be logged in to view Logos!');
-        res.redirect('/');
+        return res.redirect('/Login');
     }
 });
 router.get('/logout', function(req, res) {

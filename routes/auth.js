@@ -118,10 +118,10 @@ passport.use('signup', new LocalStrategy({
   }));
 
 //uses passport login strategy once login form is submitted
-router.post('/login', passport.authenticate("login", { successRedirect: "/", failureRedirect: "/auth" }));
+router.post('/login', passport.authenticate("login", { successRedirect: "/", failureRedirect: "/Login" }));
 
 //uses passport singup strategy once signup form is submitted
-router.post('/signup', passport.authenticate("signup", { successRedirect: "/", failureRedirect: "/auth" }));
+router.post('/signup', passport.authenticate("signup", { successRedirect: "/", failureRedirect: "/Login" }));
 
 
 module.exports = router;

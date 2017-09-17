@@ -8,19 +8,20 @@
 
 			<% for(msg in messages) { %>
                         
-          <div class="alert alert-dark"><h3><%= messages[msg] %><h3></div>
+          <div class="alert alert-danger"><h3><%= messages[msg] %><h3></div>
 
 			<% } %>
 
 <% } %>
+<div class='container-fluid border-0 well'>
 <div class='container-fluid'>
 	<div class="row">
 		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class='col-md-6'><canvas id="logoCanvas" ></canvas></div>
+		<div class='col-md-6' ><canvas id="logoCanvas" ></canvas></div>
 		<div class='col-md-3 pagination-centered text-centered'></div>
 	</div>
 	<div class="row">
-		<div class='col-md-1'></div>
+		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="btn-group">
 			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-left" id='leftArrow'></button></div>
 			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-right" id='rightArrow'></button></div>
@@ -34,15 +35,19 @@
 
 <div class='container-fluid' >
   	<div class="row">
+  		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="col-md-2"><button class='btn btn-danger' id="previousStep">Back</button></div>
   	</div>
 
   	<div class="row">
-		<div class="col-md-2"><button class='btn btn-primary' id="step0">Background Color</button></div>
-		<div class="col-md-3"><input class="jscolor" value="ab2567"></div>
+  		<div class='col-md-3 pagination-centered text-centered'></div>
+		<div class="col-md-2 "><button class='btn btn-primary' id="step0">Background Color</button></div>
+		<div class="col-md-1"><input id='jscolorBg' class="jscolor" value="ab2567"></div>
+		<div class="col-md-3"></div>
   	</div>
 
   	<div class="row">
+  		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="col-md-2"><button class='btn btn-primary' id="step1">Outer Shape</button></div>
 		<div class="col-md-3"><select id='selectMenuShape1'>
 			<% for(var i=0; i < bgImages.length; i++) { %>
@@ -51,6 +56,7 @@
   	</div>
 
   	<div class="row">
+  		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="col-md-2"><button class='btn btn-primary' id="step2">Inner Shape</button></div>
 		<div class="col-md-3"><select id='selectMenuShape2'>
 			<% for(var i=0; i < bgImages.length; i++) { %>
@@ -58,9 +64,9 @@
 			<% } %></select>
 		</div>
 	</div>
-</div>
 
   	<div class="row">
+  		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="col-md-2"><button class='btn btn-primary' id="step3">Icon</button></div>
 		<div class="col-md-3">
 			<select id='selectMenu'>
@@ -72,17 +78,40 @@
   	</div>
 
   	<div class="row">
+  		<div class='col-md-3 pagination-centered text-centered'></div>
 		<div class="col-md-2"><button class='btn btn-primary' id="step4">Text</button></div>
-		<div class="col-md-3"><input id="canvasText" value=""></div>
+		<div class="col-md-2"><input id="canvasText" value=""></div>
+		<div class="col-md-3"><select id='selectMenu3'>
+			<% for(var i=0; i < fontNames.length; i++) { %>
+			<option value='<%= fontNames[i].fontName %>'><%= fontNames[i].fontName%></option>
+			<% } %></select>
+		</div>
+		<div class='col-md-1'><input id='jscolorText' class="jscolor" value="ab2567"></div>
+  		</div>
   	</div>
 </div>
-
-	<div><ul><a id="dl" download="Canvas.png" href="#">Download Canvas</a></ul></div>
-
-	<form id="uploadForm" action='/createAndAddLogo' method="post">
-		<input type="hidden" name="dataURL" id="dataURL" />
-		<input type="text" name='logoName' id='logoName' />
-		<input type="submit" value="Upload File" id="submit" name="submit">
+<div class="row">
+	<div class='col-md-3 pagination-centered text-centered'></div>
+	<div class="col-md-3"><ul><a href="#"  data-toggle="modal" data-target="#confirm-submit">Download Canvas</a></ul></div>
+	<form class='form-inline'id="uploadForm" action='/createAndAddLogo' method="post">
+		<input type="hidden" name="dataURL" id="dataURL" class='form-control' />
+		<input type="text" name='logoName' id='logoName' class='form-control'/>
+		<input type="submit" value="Upload File" id="submit" name="submit" class='form-control'>
 	</form>
-	
+</div>
+</div>
+
+<div class="modal fade modal-submit" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">Confirm Submit</div>
+                <div class="modal-body">What size icon would you like?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a download="Canvas.png" href="#" class="btn btn-success success" id='dl'>Download Canvas</a>
+                </div>
+            </div>
+        </div>
+</div>
+
 	<script type="text/javascript" src="js/canvas.script.js"></script>
