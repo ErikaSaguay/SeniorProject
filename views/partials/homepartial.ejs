@@ -1,12 +1,12 @@
 <h1>
 <%
-
+        <!-- store all flash messages in variable messages -->
         var messages = req.flash("message");
-
+        <!-- if there is at least one message loop through all of them and display them to the user -->
         if (messages.length > 0){
 
-    %>
-
+    %>  
+            <!-- for each message in the variable messages create a div with a bootstrap alert tag with the user message -->
             <% for(msg in messages) { %>
                         
           <div class="alert alert-success"><h3><%= messages[msg] %><h3></div>

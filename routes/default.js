@@ -13,6 +13,7 @@ router.get('/defaultData',function(req,res,next){
     });
     
 });
+
 //Default Images
 router.get('/defaultImages',function(req,res,next){    
     var request = new sql.Request();
