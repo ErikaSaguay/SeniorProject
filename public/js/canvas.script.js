@@ -6,7 +6,6 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
-	var alphaFlag = false;
 
 
 	$("#step0").click(function() {
@@ -16,8 +15,12 @@ $( document ).ready(function() {
 			yPos: 0,
 			height: c.height(),
 			width: c.width(),
-			position: 0
+			position: 0,
+			alphaFlag: $('#isAlpha').attr('boolean'),
+			color: "#" + $('#jscolorBg').val()
 		});
+		$('#isAlpha').prop("disabled", true);
+		$('#jsColorBg').prop("disabled", true);
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -126,8 +129,12 @@ $( document ).ready(function() {
 		switch(obj[i].type) {
 
 			case 'background':
-				
-				drawBackground();
+				if(obj[i].isAlpha == "true"){
+					console.log("Is Alpha");
+				}else{
+					console.log("Is not Alpha");
+					drawBackground(obj[i]);
+				}
 			break;
 
 			case 'img':
@@ -202,19 +209,12 @@ $( document ).ready(function() {
 		$("#step" + (num + 1)).prop("disabled", false);
 	}
 
-	function drawBackground(fillStyle) {
+	function drawBackground(obj) {
 
 		ctx.clearRect(0, 0, c.width(), c.height());
 		
-		if(isAlpha=="true"){
-			ctx.globalAlpha=0;
-			ctx.fillStyle="#" + $('#jscolorBg').val();
-			ctx.fillRect(0,0,500,500);
-			ctx.globalAlpha=1;
-		}else{
-			ctx.fillStyle="#" + $('#jscolorBg').val();
-			ctx.fillRect(0,0,500,500);
-		}
+		ctx.fillStyle= obj.color;
+		ctx.fillRect(0,0,500,500);
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
 	}
@@ -226,6 +226,7 @@ $( document ).ready(function() {
 
 			drawOrder--;
 			$("#step0").prop("disabled", false);
+			$('#isAlpha').prop("disabled", false);
 			$("#step" + (scene.length + 1)).prop("disabled", true);
 
 			ctx.clearRect(0, 0, c.width(), c.height());
@@ -349,41 +350,14 @@ $( document ).ready(function() {
 	
 	$('#isAlpha').click(function(e) {
 		e.preventDefault();
-			if($(this).attr('boolean') == "false") {
-				$(this).attr('boolean', 'true');
-				$(this).html('Off');
-				isAlpha = $(this).attr('boolean');
-				if(typeof scene !== undefined && scene instanceof Array )
-				{
-					scene.shift();
-					scene.unshift({
-						type: "background",
-						xPos: 0,
-						yPos: 0,
-						height: c.height(),
-						width: c.width(),
-						position: 0
-					});
-				disableAndEnableStep(scene.length - 1);
-				switchCase(scene);
-				}
-				scene({
-					type: "background",
-					xPos: 0,
-					yPos: 0,
-					height: c.height(),
-					width: c.width(),
-					position: 0
-				});
-				disableAndEnableStep(scene.length - 1);
-				switchCase(scene);
-			
-					
-		}else {
+
+		if ($(this).attr('boolean') == "false") {
+			$(this).attr('boolean', 'true');
+			$(this).html('Off');
+		}
+		else {
 			$(this).attr('boolean', 'false');
 			$(this).html('On');
-			isAlpha = $(this).attr('boolean');
-			console.log(isAlpha)
 		}
 	});
 });
