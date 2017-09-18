@@ -5,9 +5,11 @@ var session = require('express-session');
 var path = require('path');
 var fs = require('file-system');
 
+//this function removes a single logo from the My Logo's page 
 router.get('/removeOneLogo/:logoId', function(req, res, next) {
         console.log(req.params.logoId);
         var request = new sql.Request();
+        //delete the logo from the Customer_Logos table that matches the Logo ID passed by the user through the My Logo's page delete button
         request.query( "DELETE FROM Customer_Logos WHERE logoID ='"+req.params.logoId+"'", function (err, result) {
             if (err) throw err;
             req.flash('message', 'Logo deleted!');
@@ -15,8 +17,11 @@ router.get('/removeOneLogo/:logoId', function(req, res, next) {
         });
 });
 
+//this function creates and adds a logo to the My Logo's page
 router.post('/createAndAddLogo', function(req, res, next) {
+    //if there is a user logged in then run the following code
     if(req.user){
+        //if the user didn't select a background color alert the user with a flash message
         if(req.body.dataURL == ''){
             req.flash('message', 'Must at least have background color!');
             return res.redirect('/CreateLogo');
@@ -31,12 +36,15 @@ router.post('/createAndAddLogo', function(req, res, next) {
         /* trims white spaces*/
         logoName = logoName.replace(/\s/g,'');
 
+        //insert the logo into the Customer_Logos table of the database
         request.query("INSERT INTO Customer_Logos(logoId,customerId,dateCreated,logoName, filePath)VALUES (NEWID(), '"+req.user.customerId+"','"+date+"','" + logoName +'.png'+ "','" + 'static/assets/user_icons/' + "')", function (err, result) {
+            //if there is an error then display the error to the user
             if (err) 
             {
                 req.flash('message', 'Something went wrong with uploading.');
                 res.redirect('/');
             }
+            //grab the logo that was just recently added to the database
             request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+logoName+ '.png' +"'", function(err, results){
                 if (err) throw err;
 
@@ -47,9 +55,11 @@ router.post('/createAndAddLogo', function(req, res, next) {
                 /* writes the img to the server */
                 fs.writeFile(logopath, buf);
             });
+            //display successful message to the user
             req.flash('message', 'Uploaded new Logo!');
             res.redirect('/MyLogos');
         });
+        //else the user is not logged in, display an error messsage
     }else{
         req.flash('message', 'Must be logged in to create Logo!');
         res.redirect('/');

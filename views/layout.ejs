@@ -29,6 +29,7 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li class="active"><a href="/">Home <span class="sr-only">(current)</span></a></li>
+                            <!-- if the user is logged in then display the My Logos and create logo button -->
                             <% if(typeof(req.user) !== 'undefined') { %>
                                 <li><a href="/MyLogos">My Logos</a></li>
                                 <li><a href="/CreateLogo">Create Logo</a></li>
@@ -38,8 +39,10 @@
                         </ul>
 
                         <ul class="nav navbar-nav navbar-right">
+                            <!-- if the user is logged in then display the logout button -->
                             <% if(typeof(req.user) !== 'undefined') { %>
                             <li><button type="button" class="btn btn-default navbar-btn"><a href='/Logout'>Logout</a></button>
+                            <!-- Else there is no user logged in, display the login button -->
                             <% }else{ %>
                             <li><button type="button" class="btn btn-default navbar-btn"><a href='/Login'>Sign in</a></button></li>
                             <% } %>
