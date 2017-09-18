@@ -31,6 +31,7 @@ $( document ).ready(function() {
 			width: 400,
 			position: 1
 		});
+		drawOrder++;
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -44,6 +45,7 @@ $( document ).ready(function() {
 			width: 300,
 			position: 2
 		});
+		drawOrder++;
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -57,6 +59,7 @@ $( document ).ready(function() {
 			width: 50,
 			position: 3
 		});
+		drawOrder++;
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -73,6 +76,7 @@ $( document ).ready(function() {
 			textAlign: "center",
 			position: 4
 		});
+		drawOrder++;
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -90,6 +94,7 @@ $( document ).ready(function() {
 			textAlign: "center",
 			position: 5
 		});
+		drawOrder++;
 		disableAndEnableStep(scene.length - 1);
 		switchCase(scene);
 	});
@@ -216,9 +221,10 @@ $( document ).ready(function() {
 
 	document.querySelector('#previousStep').onclick = function() {
 		scene.pop();
-		drawOrder--;
 		if (scene.length == 0)
 		{
+
+			drawOrder--;
 			$("#step0").prop("disabled", false);
 			$("#step" + (scene.length + 1)).prop("disabled", true);
 
@@ -227,6 +233,7 @@ $( document ).ready(function() {
 		}
 		else
 		{
+
 			$("#step" + (scene.length)).prop("disabled", false);
 			$("#step" + (scene.length + 1)).prop("disabled", true);
 			switchCase(scene);
@@ -342,20 +349,36 @@ $( document ).ready(function() {
 	
 	$('#isAlpha').click(function(e) {
 		e.preventDefault();
-		if($(this).attr('boolean') == "false") {
-			$(this).attr('boolean', 'true');
-			$(this).html('Off');
-			isAlpha = $(this).attr('boolean');
-			scene.push({
-				type: "background",
-				xPos: 0,
-				yPos: 0,
-				height: c.height(),
-				width: c.width(),
-				position: 0
-			});
-			disableAndEnableStep(scene.length - 1);
-			switchCase(scene);
+			if($(this).attr('boolean') == "false") {
+				$(this).attr('boolean', 'true');
+				$(this).html('Off');
+				isAlpha = $(this).attr('boolean');
+				if(typeof scene !== undefined && scene instanceof Array )
+				{
+					scene.shift();
+					scene.unshift({
+						type: "background",
+						xPos: 0,
+						yPos: 0,
+						height: c.height(),
+						width: c.width(),
+						position: 0
+					});
+				disableAndEnableStep(scene.length - 1);
+				switchCase(scene);
+				}
+				scene({
+					type: "background",
+					xPos: 0,
+					yPos: 0,
+					height: c.height(),
+					width: c.width(),
+					position: 0
+				});
+				disableAndEnableStep(scene.length - 1);
+				switchCase(scene);
+			
+					
 		}else {
 			$(this).attr('boolean', 'false');
 			$(this).html('On');
