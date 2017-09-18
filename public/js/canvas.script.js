@@ -129,12 +129,8 @@ $( document ).ready(function() {
 		switch(obj[i].type) {
 
 			case 'background':
-				if(obj[i].isAlpha == "true"){
-					console.log("Is Alpha");
-				}else{
-					console.log("Is not Alpha");
-					drawBackground(obj[i]);
-				}
+
+				drawBackground(obj[i]);
 			break;
 
 			case 'img':
@@ -176,13 +172,11 @@ $( document ).ready(function() {
 				//if object length is 5, write text after all images have loaded
 				var imgBuffer = new Image();
 				imgBuffer.src = obj[i].src;
-				console.log(imgBuffer.src)
 				var loaded = new Promise(function(resolve, reject) {     
 					imgBuffer.addEventListener("load", resolve);
 				});
 				loaded.then(function() {
 					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
-					console.log(obj[i].position)
 					dataURL = c[0].toDataURL();
 					$('#dataURL').val(dataURL);
 				});		
@@ -212,9 +206,13 @@ $( document ).ready(function() {
 	function drawBackground(obj) {
 
 		ctx.clearRect(0, 0, c.width(), c.height());
+		if(obj.alphaFlag == "true") {
+
+		}else {
+			ctx.fillStyle= obj.color;
+			ctx.fillRect(0,0,500,500);
+		}
 		
-		ctx.fillStyle= obj.color;
-		ctx.fillRect(0,0,500,500);
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
 	}
@@ -230,7 +228,6 @@ $( document ).ready(function() {
 			$("#step" + (scene.length + 1)).prop("disabled", true);
 
 			ctx.clearRect(0, 0, c.width(), c.height());
-			console.log('clear everything')
 		}
 		else
 		{
@@ -272,7 +269,6 @@ $( document ).ready(function() {
 
 	    loaded.then(function() {
 	      ctx64.drawImage(imgBuffer, 0,0, num, num);
-	      console.log("image drawn")
 	      var smallDt = canvas64[0].toDataURL();
 
 	      /* Change MIME type to trick the browser to download the file instead of displaying it */
@@ -318,7 +314,6 @@ $( document ).ready(function() {
 		}else if(scene.length >= 5) {
 			if(scene[scene.length -1].font.indexOf('p') == 2 || scene[scene.length -1].font.indexOf('p') == 1){	
 				/* If font size is less than 100px */
-				console.log("equal to 2")
 				var fontSize = parseInt(scene[scene.length -1].font.substring(0,3));
 				fontSize += 5;
 				scene[scene.length-1].font = fontSize + "px " + $("#selectMenu3 option:selected").val();
@@ -337,7 +332,6 @@ $( document ).ready(function() {
 		}else if(scene.length >= 5) {
 			if(scene[scene.length -1].font.indexOf('p') > 1){	
 				/* If font size is greater than single digit */
-				console.log("greater than 1")
 				var fontSize = parseInt(scene[scene.length -1].font.substring(0,3));
 				fontSize -= 5;
 				scene[scene.length-1].font = fontSize + "px " + $("#selectMenu3 option:selected").val();
