@@ -49,7 +49,7 @@ router.post('/createAndAddLogo', function(req, res, next) {
             if (err) 
             {
                 req.flash('message', 'Something went wrong with uploading.');
-                res.redirect('/');
+                return res.redirect('/');
             }
             //grab the logo that was just recently added to the database
             request.query("SELECT logoId,logoName FROM Customer_Logos WHERE logoName =  '"+logoName+ '.png' +"'", function(err, results){
@@ -82,8 +82,8 @@ router.get('/Help', function(req, res, next) {
     res.render('partials/helppartial', {req: req});
 });
 
-router.get('/Contact', function(req, res, next) {
-    res.render('partials/helppartial', {req: req});
+router.get('/AboutUs', function(req, res, next) {
+    res.render('partials/aboutpartial', {req: req});
 });
 
 router.get('/Login', function(req, res, next) {
