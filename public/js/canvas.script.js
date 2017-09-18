@@ -6,6 +6,8 @@ $( document ).ready(function() {
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
+	var alphaFlag = false;
+
 
 	$("#step0").click(function() {
 		scene.push({
@@ -59,7 +61,6 @@ $( document ).ready(function() {
 		switchCase(scene);
 	});
 	$("#step4").click(function() {
-		
 		scene.push({
 			type: "img",
 			textValue: $('#canvasText').val(),
@@ -68,7 +69,7 @@ $( document ).ready(function() {
 			width: 0,
 			xPos: 205,
 			yPos: 205,
-			font: "45px " + $("#selectMenu3 option:selected").val(),
+			font: '45px ' + $("#selectMenu3 option:selected").val(),
 			textAlign: "center",
 			position: 4
 		});
@@ -120,6 +121,7 @@ $( document ).ready(function() {
 		switch(obj[i].type) {
 
 			case 'background':
+				
 				drawBackground();
 			break;
 
@@ -162,6 +164,7 @@ $( document ).ready(function() {
 				//if object length is 5, write text after all images have loaded
 				var imgBuffer = new Image();
 				imgBuffer.src = obj[i].src;
+				console.log(imgBuffer.src)
 				var loaded = new Promise(function(resolve, reject) {     
 					imgBuffer.addEventListener("load", resolve);
 				});
@@ -180,11 +183,11 @@ $( document ).ready(function() {
 	}
 
 	function drawText(obj, i){
-		
-		ctx.font = obj[i].font;
-		console.log(ctx.font);
+		var font = obj[i].font;
+
+		ctx.font = font;
+		var test = ctx.font;
 		ctx.fillStyle = '#' + $('#jscolorText').val();
-		console.log(ctx.fillStyle);
 		ctx.fillText(obj[i].textValue, obj[i].xPos,obj[i].yPos);
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
@@ -195,8 +198,18 @@ $( document ).ready(function() {
 	}
 
 	function drawBackground(fillStyle) {
-		ctx.fillStyle="#" + $('#jscolorBg').val();
-		ctx.fillRect(0,0,500,500);
+
+		ctx.clearRect(0, 0, c.width(), c.height());
+		
+		if(isAlpha=="true"){
+			ctx.globalAlpha=0;
+			ctx.fillStyle="#" + $('#jscolorBg').val();
+			ctx.fillRect(0,0,500,500);
+			ctx.globalAlpha=1;
+		}else{
+			ctx.fillStyle="#" + $('#jscolorBg').val();
+			ctx.fillRect(0,0,500,500);
+		}
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
 	}
@@ -222,7 +235,6 @@ $( document ).ready(function() {
 
 	$("a.download").click(function() {
 		var dt = c[0].toDataURL();
-		console.log('new data url')
 	    canImage = document.createElement('img');
 		canImage.src = dt;
 
@@ -230,8 +242,6 @@ $( document ).ready(function() {
 		resizeImg(128, canImage);
 		resizeImg(256, canImage);
 		resizeImg(500, canImage);
-
-      	console.log($('#dl64').attr('download'));
 	});
 
 	function resizeImg(num, canImage){
@@ -330,4 +340,27 @@ $( document ).ready(function() {
 		}
 	});
 	
+	$('#isAlpha').click(function(e) {
+		e.preventDefault();
+		if($(this).attr('boolean') == "false") {
+			$(this).attr('boolean', 'true');
+			$(this).html('Off');
+			isAlpha = $(this).attr('boolean');
+			scene.push({
+				type: "background",
+				xPos: 0,
+				yPos: 0,
+				height: c.height(),
+				width: c.width(),
+				position: 0
+			});
+			disableAndEnableStep(scene.length - 1);
+			switchCase(scene);
+		}else {
+			$(this).attr('boolean', 'false');
+			$(this).html('On');
+			isAlpha = $(this).attr('boolean');
+			console.log(isAlpha)
+		}
+	});
 });

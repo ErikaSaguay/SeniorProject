@@ -126,3 +126,83 @@
 .gitProfile {
    
 }
+
+@font-face {
+    font-family: Acme-Regular;
+    src: url(../fonts/Acme/Acme-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: BalooTammudu-Regular;
+    src: url(../fonts/Baloo_Tammudu/BalooTammudu-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Cinzel;
+    src: url(../fonts/Cinzel/Cinzel-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Dosis-Regular;
+    src: url(../fonts/Dosis/Dosis-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: GloriaHallelujah;
+    src: url(../fonts/Gloria_Hallelujah/GloriaHallelujah.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: IndieFlower;
+    src: url(../fonts/Indie_Flower/IndieFlower.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Nunito-Regular;
+    src: url(../fonts/Nunito/Nunito-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: OpenSansCondensed-Light;
+    src: url(../fonts/Open_Sans_Condensed/OpenSansCondensed-Light.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: PermanentMarker;
+    src: url(../fonts/PermanentMarker/PermanentMarker-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Play;
+    src: url(../fonts/Play/Play-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: PT_Sans_Narrow;
+    src: url(../fonts/PT_Sans_Narrow/PT_Sans-Narrow-Web-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Raleway;
+    src: url(../fonts/Raleway/Raleway-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: Satisfy;
+    src: url(../fonts/Satisfy/Satisfy-Regular.ttf);
+    font-weight: normal;
+    font-style: normal;
+}
+>>>>>>> Stashed changes

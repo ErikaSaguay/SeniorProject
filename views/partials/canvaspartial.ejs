@@ -14,100 +14,97 @@
 
 <% } %>
 <div class='container-fluid border-0 well'>
-<div class='container-fluid'>
-	<div class="row">
-		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class='col-md-6' ><canvas id="logoCanvas" ></canvas></div>
-		<div class='col-md-3 pagination-centered text-centered'></div>
-	</div>
-	<div class="row">
-		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="btn-group">
-			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-left" id='leftArrow'></button></div>
-			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-right" id='rightArrow'></button></div>
-			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-up" id='upArrow'></button></div>
-			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-down" id='downArrow'></button></div>
-    		<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-resize-full" id='grow'></button></div>
-			<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-resize-small" id='shrink'></button></div>
-    	</div>
-	</div>
-</div>
 
-<div class='container-fluid' >
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-danger' id="previousStep">Back</button></div>
-  	</div>
-
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2 "><button class='btn btn-primary' id="step0">Background Color</button></div>
-		<div class="col-md-1"><input id='jscolorBg' class="jscolor" value="ab2567"></div>
-		<div class="col-md-3"></div>
-  	</div>
-
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-primary' id="step1">Outer Shape</button></div>
-		<div class="col-md-3"><select id='selectMenuShape1'>
-			<% for(var i=0; i < bgImages.length; i++) { %>
-			<option value='<%= bgImages[i].filePath %>'><%= bgImages[i].bgName%></option>
-			<% } %></select></div>
-  	</div>
-
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-primary' id="step2">Inner Shape</button></div>
-		<div class="col-md-3"><select id='selectMenuShape2'>
-			<% for(var i=0; i < bgImages.length; i++) { %>
-			<option value='<%= bgImages[i].filePath %>'><%= bgImages[i].bgName%></option>
-			<% } %></select>
+	<div class='container-fluid'>
+		<div class="row">
+			<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class='col-md-6' ><canvas id="logoCanvas" ></canvas></div>
+			<div class='col-md-3 pagination-centered text-centered'></div>
+		</div>
+		<div class="row">
+			<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="btn-group">
+				<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-left" id='leftArrow'></button></div>
+				<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-right" id='rightArrow'></button></div>
+				<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-up" id='upArrow'></button></div>
+				<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-arrow-down" id='downArrow'></button></div>
+	    		<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-resize-full" id='grow'></button></div>
+				<div class='col-md-2'><button type="button" class="btn btn-primary glyphicon glyphicon-resize-small" id='shrink'></button></div>
+	    	</div>
 		</div>
 	</div>
+	<div class='container-fluid table' >
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-danger' id="previousStep">Back</button></div>
+	  	</div>
 
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-primary' id="step3">Icon</button></div>
-		<div class="col-md-3">
-			<select id='selectMenu'>
-			<% for(var i=0; i < results.length; i++) { %>
-			<option value='<%= results[i].filePath %>'><%= results[i].iconName%></option>
-			<% } %>
-			</select>
-		</div>
-  	</div>
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2 "><button class='btn btn-primary' id="step0">Background Color</button></div>
+			<div class="col-md-1"><input id='jscolorBg' class="jscolor" value="ab2567"></div>
+			<div class="col-md-2" ><button class='btn btn-primary' id='isAlpha' boolean='false'>On</button></div>
+	  	</div>
 
-  	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-primary' id="step4">Text</button></div>
-		<div class="col-md-2"><input id="canvasText" value=""></div>
-		<div class="col-md-3"><select id='selectMenu3'>
-			<% for(var i=0; i < fontNames.length; i++) { %>
-			<option value='<%= fontNames[i].fontName %>'><%= fontNames[i].fontName%></option>
-			<% } %></select>
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-primary' id="step1">Outer Shape</button></div>
+			<div class="col-md-3"><select id='selectMenuShape1'>
+				<% for(var i=0; i < bgImages.length; i++) { %>
+				<option value='<%= bgImages[i].filePath %>'><%= bgImages[i].bgName%></option>
+				<% } %></select></div>
+	  	</div>
+
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-primary' id="step2">Inner Shape</button></div>
+			<div class="col-md-3"><select id='selectMenuShape2'>
+				<% for(var i=0; i < bgImages.length; i++) { %>
+				<option value='<%= bgImages[i].filePath %>'><%= bgImages[i].bgName%></option>
+				<% } %></select>
+			</div>
 		</div>
-		<div class='col-md-1'><input id='jscolorText' class="jscolor" value="000000"></div>
-	</div>
-	<div class="row">
-  		<div class='col-md-3 pagination-centered text-centered'></div>
-		<div class="col-md-2"><button class='btn btn-primary' id="step5">Text</button></div>
-		<div class="col-md-2"><input id="canvasText2" value=""></div>
-		
-		<div class='col-md-1'><input id='jscolorText2' class="jscolor" value="000000"></div>
-	</div>
+
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-primary' id="step3">Icon</button></div>
+			<div class="col-md-3">
+				<select id='selectMenu'>
+				<% for(var i=0; i < results.length; i++) { %>
+				<option value='<%= results[i].filePath %>'><%= results[i].iconName%></option>
+				<% } %>
+				</select>
+			</div>
+	  	</div>
+
+	  	<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-primary' id="step4">Text</button></div>
+			<div class="col-md-2"><input id="canvasText" value=""></div>
+			<div class="col-md-3"><select id='selectMenu3'>
+				<% for(var i=0; i < fontNames.length; i++) { %>
+				<option value='<%= fontNames[i].fontName %>'><%= fontNames[i].fontName%></option>
+				<% } %></select>
+			</div>
+			<div class='col-md-1'><input id='jscolorText' class="jscolor" value="000000"></div>
+		</div>
+		<div class="row">
+	  		<div class='col-md-3 pagination-centered text-centered'></div>
+			<div class="col-md-2"><button class='btn btn-primary' id="step5">Text</button></div>
+			<div class="col-md-2"><input id="canvasText2" value=""></div>
+		</div>
   	</div>
 </div>
 <div class="well well-sm">
-<div class="row">
-	<div class='col-md-3 pagination-centered text-centered'></div>
-	<div class="col-md-3"><ul><a href="#"  data-toggle="modal" href="" name='' data-target="#confirm-download" title='' class='download'>Download</a></ul></div>
-	<form class='form-inline'id="uploadForm" action='/createAndAddLogo' method="post">
-		<input type="hidden" name="dataURL" id="dataURL" class='form-control' />
-		<input type="text" name='logoName' id='logoName' class='form-control'/>
-		<input type="submit" value="Upload File" id="submit" name="submit" class='form-control'>
-	</form>
-</div>
-</div>
+	<div class="row">
+		<div class='col-md-3 pagination-centered text-centered'></div>
+		<div class="col-md-3"><ul><a href="#"  data-toggle="modal" href="" name='' data-target="#confirm-download" title='' class='download'>Download</a></ul></div>
+		<form class='form-inline'id="uploadForm" action='/createAndAddLogo' method="post">
+			<input type="hidden" name="dataURL" id="dataURL" class='form-control' />
+			<input type="text" name='logoName' id='logoName' class='form-control'/>
+			<input type="submit" value="Upload File" id="submit" name="submit" class='form-control'>
+		</form>
+	</div>
 </div>
 
 <div class="modal fade modal-download" id="confirm-download" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
