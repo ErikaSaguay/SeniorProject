@@ -128,7 +128,7 @@ a:hover {
 }
 
 .form {
-  background: #E5FDF7;
+  background: #29648a;
   padding: 40px !important;
   max-width: 600px !important;
   margin: 40px 160px !important;
@@ -153,7 +153,7 @@ a:hover {
   text-decoration: none !important;
   padding: 15px !important;
   background: #fff !important;
-  color: #D6D61C !important;
+  color: #29648a !important;
   font-size: 20px !important;
   float: left !important;
   width: 50% !important;
@@ -164,12 +164,12 @@ a:hover {
 }
 
 .tab-group li a:hover {
-  background: #D6D61C !important;
+  background: #464866 !important;
   color: #fff !important;
 }
 
 .tab-group .active a {
-  background: #D6D61C !important;
+  background: #25274d !important;
   color: #ffffff !important;
 }
 
@@ -179,7 +179,7 @@ a:hover {
 
 h1 {
   text-align: center;
-  color: #D6D61C;
+  color: #fff;
   font-weight: 300;
   margin: 0 0 40px;
 }
@@ -189,7 +189,7 @@ label {
   -webkit-transform: translateY(6px);
   transform: translateY(6px);
   left: 13px;
-  color: #D6D61C;
+  color: #fff;
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-backface-visibility: hidden;
@@ -199,7 +199,7 @@ label {
 
 label .req {
   margin: 2px;
-  color: #1ab188;
+  color: #fff;
 }
 
 label.active {
@@ -214,7 +214,7 @@ label.active .req {
 }
 
 label.highlight {
-  color: black;
+  color: #fff;
 }
 
 input, textarea {
@@ -265,7 +265,7 @@ textarea {
   outline: none;
   border-radius: 3px;
   border-style: solid;
-  border-color: #D6D61C;
+  border-color: #464866;
   border-width: 5px;
   padding: 15px 0;
   font-size: 2rem;
@@ -273,13 +273,13 @@ textarea {
   text-transform: uppercase;
   letter-spacing: .1em;
   background: #fff;
-  color: #D6D61C;
+  color: #464866;
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
   -webkit-appearance: none;
 }
 .button:hover, .button:focus {
-  background: #D6D61C;
+  background: #464866;
   color: #fff;
 }
 
@@ -298,4 +298,8 @@ textarea {
     padding-bottom: 2%;
     padding-top: 5%;
 
+}
+
+.header {
+    color: #fff !important;
 }
