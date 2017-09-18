@@ -2,15 +2,8 @@ var express = require('express');
 var router = express.Router();
 var sql = require('mssql');
 var session = require('express-session');
-var dateFormat = require('dateformat');
-var validator = require('validator');
-
-//flash messages
-var session = require('express-session');
-
 var path = require('path');
 var fs = require('file-system');
-var os = require('os');
 
 router.get('/removeOneLogo/:logoId', function(req, res, next) {
         console.log(req.params.logoId);
@@ -86,24 +79,31 @@ router.get('/CreateLogo', function(req, res, next) {
         var request = new sql.Request();
         //put the result into an arry to access later on
         request.query("SELECT iconName,filePath FROM Default_Icons ", function (err, results) {       
-        if (err) console.log(err);
+        if (err){
+            req.flash('message', 'Unable to retrieve icons');
+            return res.redirect('/');
+        };
 
             request.query("SELECT filePath,bgName FROM Default_BgImages ", function (err, bgImages) {       
-                if (err) console.log(err);
+                if (err){
+                    req.flash('message', 'Unable to retrieve background icons');
+                    return res.redirect('/');
+                };
                 
-                request.query("SELECT fontName FROM Default_Fonts ", function (err, fontNames) {       
-                    if (err) console.log(err);
-                    res.render('partials/canvaspartial', {results: results, bgImages: bgImages,user: req.user, req: req, fontNames: fontNames });
-
+                request.query("SELECT fontName FROM Default_Fonts ", function (err, fontNames) {
+                    if (err){
+                        req.flash('message', 'Unable to retrieve fonts');
+                        return res.redirect('/');
+                    };     
+                    res.render('partials/canvaspartial', {results: results, bgImages: bgImages, req: req, fontNames: fontNames });
                 });
             });//end query 1
-        });//end query 1
-    }//end if 1
+        });//end query 2
+    }//end if 3
     //else render the home page without the user variable
     else {
         req.flash('message', 'Must be logged in to create logo!');
         return res.redirect('/Login');
-        
     }//end else
 });
 
@@ -111,10 +111,16 @@ router.get('/MyLogos', function(req, res, next) {
     if(req.user){
         
         var request = new sql.Request();
-        request.query("SELECT logoName,logoID, customerId FROM Customer_Logos WHERE customerId = '"+req.user.customerId+"'", function(err, results){
+        request.query("SELECT logoName,logoID,customerId, dateCreated FROM Customer_Logos WHERE customerId = '"+req.user.customerId+"' ORDER BY dateCreated", function(err, results){
             if (err) throw err;
-            console.log(results[0]);
-            res.render('partials/logospartial', {sql: results, user: req.user, req: req});
+            for(i=0; i<results.length; i++){
+                /* Date is trimmmed for reading purposes */
+                var dateTrim = results[i].dateCreated;
+                dateTrim = dateTrim + "";
+                dateTrim = dateTrim.substring(4,15);
+                results[i].dateCreated = dateTrim;
+            }
+            res.render('partials/logospartial', {sql: results, req: req});
         });
     }
     //else render the home page without the user variable

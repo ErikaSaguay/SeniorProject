@@ -3,14 +3,11 @@ var app = express();
 var expressLayouts = require('express-ejs-layouts');
 var engine = require('ejs-locals');
 var path = require('path');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var http = require('http');
-var sql = require('mssql');
-var passwordHash = require('password-hash');
 var passport = require('passport');
 var flash = require('connect-flash-plus');
 
@@ -26,7 +23,7 @@ app.use(express.static("views"));
 
 //initialize passport and the session variable that will hold the user info. 
 app.use(session({ 
-    secret: 'keyboard cat',
+    secret: 'secret',
     resave: true, 
     saveUninitialized:true})); // session secret
 

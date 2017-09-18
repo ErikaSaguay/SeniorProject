@@ -3,8 +3,6 @@ $( document ).ready(function() {
 	var scene = [];
 	var ctx;
 	var c = $("#logoCanvas");
-	//var b = document.querySelector('button');
-	var deg = document.querySelector('input');
 	initializing();
 	var drawOrder = 0;
 	var dataURL = "";
@@ -96,7 +94,7 @@ $( document ).ready(function() {
 	});
 
 	function initializing(){ // inits all buttons, canvas, imgBuffer, and ctx objects
-		c.attr("width", 500)
+		c.attr("width", 500);
 		c.attr("height", 500);
 		ctx = c[0].getContext("2d");
 
@@ -111,12 +109,7 @@ $( document ).ready(function() {
 		if (i != 0) {steps[i].prop("disabled", true);}
 	}
 
-	function rotate(degrees) { // rotates image on selected canvas
-		console.log("rotate function");
-	}
-
 	function switchCase(obj){
-		//drawBackground();
 		for(var i = 0; i < obj.length; i++)
 		{
 			drawImage(obj,i);
@@ -128,7 +121,6 @@ $( document ).ready(function() {
 
 			case 'background':
 				drawBackground();
-				console.log('bg');
 			break;
 
 			case 'img':
@@ -142,9 +134,6 @@ $( document ).ready(function() {
 
 				loaded.then(function() {
 					ctx.drawImage(imgBuffer, obj[i].xPos, obj[i].yPos, obj[i].width, obj[i].height);
-					console.log(obj[i].position)
-					$('#dataURL').val(dataURL);
-					console.log()
 					dataURL = c[0].toDataURL();
 					$('#dataURL').val(dataURL);
 				});
@@ -156,13 +145,11 @@ $( document ).ready(function() {
 					imgBuffer.src = obj[i].src;
 					var loaded = new Promise(function(resolve, reject) {     
 						imgBuffer.addEventListener("load", resolve);
-						console.log(obj[i].position)
 					});
 					loaded.then(function() {
 						if(obj.length == 6)
 						{
 							ctx.drawImage(imgBuffer, obj[3].xPos, obj[3].yPos, obj[3].width, obj[3].height);
-							
 							drawText(obj, ++i);
 							drawText(obj, ++i);
 						}else
@@ -171,7 +158,6 @@ $( document ).ready(function() {
 							drawText(obj, ++i);
 						}
 					});
-					// loaded.the
 				}
 				//if object length is 5, write text after all images have loaded
 				var imgBuffer = new Image();
@@ -210,16 +196,10 @@ $( document ).ready(function() {
 
 	function drawBackground(fillStyle) {
 		ctx.fillStyle="#" + $('#jscolorBg').val();
-		console.log($('.jscolorBg').val());
 		ctx.fillRect(0,0,500,500);
 		dataURL = c[0].toDataURL();
 		$('#dataURL').val(dataURL);
 	}
-	//Events
-	
-	// b.onclick = function() {
-	// 	rotate(deg.value);
-	// };
 
 	document.querySelector('#previousStep').onclick = function() {
 		scene.pop();
@@ -236,78 +216,53 @@ $( document ).ready(function() {
 		{
 			$("#step" + (scene.length)).prop("disabled", false);
 			$("#step" + (scene.length + 1)).prop("disabled", true);
-		switchCase(scene);
+			switchCase(scene);
 		}
 	};
 
-	$('#dl32').click(dlCanvas32);
-	$('#dl64').click(dlCanvas64);
-	$('#dl128').click(dlCanvas128);
-
-	function submitClick(){
+	$("a.download").click(function() {
 		var dt = c[0].toDataURL();
-		  /* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-		  dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+		console.log('new data url')
+	    canImage = document.createElement('img');
+		canImage.src = dt;
 
-		  /* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		  dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
+		resizeImg(64, canImage);
+		resizeImg(128, canImage);
+		resizeImg(256, canImage);
+		resizeImg(500, canImage);
 
+      	console.log($('#dl64').attr('download'));
+	});
 
-		  this.href = dt;
-	}
+	function resizeImg(num, canImage){
 
-	function dlCanvas32() {
-		var dt = c[0].toDataURL();
-	    imageFoo = document.createElement('img');
-		imageFoo.src = dt;
+	    // Image Style
+	    canImage.style.width = num+'px';
+	    canImage.style.height = num+'px';
 
-		// Style your image here
-		imageFoo.style.width = '32px';
-		imageFoo.style.height = '32px';
-		console.log("32");
+	    var canvas64 = $('<canvas/>');
+	    canvas64.attr("width", num);
+	    canvas64.attr("height", num);
 
-		var dt = c[0].toDataURL();
-		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+	    var ctx64 = canvas64[0].getContext('2d');
+	    var imgBuffer = new Image();
+	    imgBuffer.src = canImage.src;
 
-		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
-		this.href = dt;
-	};
-	function dlCanvas64() {
-		var dt = c[0].toDataURL();
-	    imageFoo = document.createElement('img');
-		imageFoo.src = dt;
+	    var loaded = new Promise(function(resolve, reject) { 
+	      imgBuffer.addEventListener("load", resolve);
+	    });
 
-		// Style your image here
-		imageFoo.style.width = '64px';
-		imageFoo.style.height = '64px';
+	    loaded.then(function() {
+	      ctx64.drawImage(imgBuffer, 0,0, num, num);
+	      console.log("image drawn")
+	      var smallDt = canvas64[0].toDataURL();
 
-		var dt = c[0].toDataURL();
-		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
-
-		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
-		this.href = dt;
-	};
-	function dlCanvas128() {
-		var dt = c[0].toDataURL();
-	    imageFoo = document.createElement('img');
-		imageFoo.src = dt;
-
-		// Style your image here
-		imageFoo.style.width = '128px';
-		imageFoo.style.height = '128px';
-
-		var dt = c[0].toDataURL();
-		/* Change MIME type to trick the browser to downlaod the file instead of displaying it */
-		dt = dt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
-
-		/* In addition to <a>'s "download" attribute, you can define HTTP-style headers */
-		dt = dt.replace(/^data:application\/octet-stream/, 'data:application/octet-stream;headers=Content-Disposition%3A%20attachment%3B%20filename=CompanyLogo.png');
-		this.href = dt;
-	};
+	      /* Change MIME type to trick the browser to download the file instead of displaying it */
+	      smallDt = smallDt.replace(/^data:image\/[^;]*/, 'data:application/octet-stream');
+	      $('#dl'+num).attr('href', smallDt);
+	      $('#dl'+num).attr('download', 'logo.png');
+	    });
+	  }
 
 	$( "#leftArrow" ).click(function() {
 		if(scene.length > 1) {
@@ -342,11 +297,17 @@ $( document ).ready(function() {
 			scene[scene.length-1].height = scene[scene.length-1].height+10;
 			scene[scene.length-1].width = scene[scene.length-1].width+10;
 			switchCase(scene);
-		}else if(scene.length == 5) {
-			var fontSize = parseInt(scene[scene.length -1].font.substring(0,2));
-			fontSize = fontSize + 5;
-			scene[scene.length -1].font.setCharAt(0, fontSize.toString());
-			console.log(scene[scene.length -1].font);
+		}else if(scene.length >= 5) {
+			if(scene[scene.length -1].font.indexOf('p') == 2 || scene[scene.length -1].font.indexOf('p') == 1){	
+				/* If font size is less than 100px */
+				console.log("equal to 2")
+				var fontSize = parseInt(scene[scene.length -1].font.substring(0,3));
+				fontSize += 5;
+				scene[scene.length-1].font = fontSize + "px " + $("#selectMenu3 option:selected").val();
+				switchCase(scene);
+			}else{
+				alert("Font won't go more than 100px");
+			}
 		}
 	});
 
@@ -355,8 +316,17 @@ $( document ).ready(function() {
 			scene[scene.length-1].height = scene[scene.length-1].height-10;
 			scene[scene.length-1].width = scene[scene.length-1].width-10;
 			switchCase(scene);
-		}else if(scene.length == 5) {
-			
+		}else if(scene.length >= 5) {
+			if(scene[scene.length -1].font.indexOf('p') > 1){	
+				/* If font size is greater than single digit */
+				console.log("greater than 1")
+				var fontSize = parseInt(scene[scene.length -1].font.substring(0,3));
+				fontSize -= 5;
+				scene[scene.length-1].font = fontSize + "px " + $("#selectMenu3 option:selected").val();
+				switchCase(scene);
+			}else{
+				alert("Font won't go less than 0px");
+			}
 		}
 	});
 	

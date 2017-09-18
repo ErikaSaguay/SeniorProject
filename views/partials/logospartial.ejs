@@ -25,10 +25,9 @@
                      </a>
                   </div>
                   <div class="panel-body">
-                      <p class="profile-name"><%= logos.logoName %></p>
+                      <p class="profile-name"><%= logos.logoName %></p><p>Date Created: <%=logos.dateCreated %></p>
 
-                        <a  class="download" href="assets/user_icons/<%= logos.logoID+logos.logoName %>" download="<%= logos.logoName %>">Download</a>
-
+                        <a href="#"  data-toggle="modal" href="assets/user_icons/<%= logos.logoID+logos.logoName %>" name='<%= logos.logoName %>'data-target="#confirm-download" title='assets/user_icons/<%= logos.logoID+logos.logoName %>' class='download'>Download</a>
                         <a href="#" title="<%= logos.logoID %>" type="button" class="btn btn-default delete-btn" data-toggle="modal" data-target="#confirm-submit">Delete</a>
 
                   </div>  
@@ -70,6 +69,22 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                     <a href="#" id="submit" class="btn btn-success success">Submit</a>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="modal fade modal-download" id="confirm-download" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">Confirm Download</div>
+                <div class="modal-body">Which size would you like to download?</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <a download="Logo.png" href="#" class="btn btn-success success " id='dl64'>64x64</a>
+                    <a download="Logo.png" href="#" class="btn btn-success success " id='dl128'>128x128</a>
+                    <a download="Logo.png" href="#" class="btn btn-success success " id='dl256'>256x256</a>
+                    <a download="Logo.png" href="#" id='dl500' class="btn btn-success success " >500x500</a>
                 </div>
             </div>
         </div>
